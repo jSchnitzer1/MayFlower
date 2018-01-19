@@ -5,6 +5,14 @@ $(function() {
 	// And create the instance of ExampleView
 	var exampleView = new ExampleView($("#exampleView"));
 
+	$('#vide_container').vide({
+        mp4: "video/rst1.mp4",
+        poster: "detect"
+    });
+
+    $('.heading').addClass('hanimate');
+    $('.subheading').addClass('sanimate');
+    $('.reserve').addClass('ranimate');
 	/**
 	 * IMPORTANT: app.js is the only place where you are allowed to
 	 * use the $('someSelector') to search for elements in the whole HTML.
