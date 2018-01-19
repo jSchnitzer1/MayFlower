@@ -1,0 +1,91 @@
+@font-face {
+    font-family: "century_gothic";
+    src: url(../fonts/century_gothic.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "bank_gothic";
+    src: url(../fonts/bank_gothic.ttf) format("truetype");
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    font-family: "century_gothic", Verdana, Tahoma;
+    color: rgba(255,255,255, 1);
+}
+
+.fh {
+    height: 100%;
+}
+
+#vide_container {
+    height: 100%;
+}
+
+.overlay{
+    height: 100%;
+    background-color: rgba(53, 53, 53, 0.7);
+}
+
+.text-center {
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 24px;
+    transform: scale(2);
+    transition: all 3s;
+    opacity: 0.3;
+}
+
+.heading.hanimate {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.subheading {
+    font-weight: 300;
+    font-size: 20px;
+    transform: translateX(500px);
+}
+
+.subheading.sanimate {
+    transform: translateX(0px);
+    transition: all 3s ease;
+}
+
+.reserve {
+    margin-top: 25px;
+    transform: translateY(300px);
+}
+
+.reserve.ranimate {
+    transform: translateY(0px);
+    transition: all 3s ease;
+}
+
+.btn-outline-white {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
+    font-size: 20px;
+    border-radius: 0px;
+    border-width: 2px;
+    text-decoration:  none;
+
+
+}
+
+.btn-outline-white:hover, btn-outline-white:focus, btn-outline-white:active btn-outline-white:visited {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+    text-decoration:  none;
+    box-shadow: inset 0 0 0 1px #ffd27f;
+}
+
+
+
