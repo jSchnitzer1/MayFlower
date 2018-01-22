@@ -16,6 +16,7 @@ body {
     height: 100%;
     font-family: "century_gothic", Verdana, Tahoma;
     color: rgba(255,255,255, 1);
+    overflow: hidden;
 }
 
 .fh {
@@ -45,6 +46,11 @@ body {
 .heading.hanimate {
     transform: scale(1);
     opacity: 1;
+}
+
+.heading span {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
 }
 
 .subheading {

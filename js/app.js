@@ -3,7 +3,7 @@ $(function() {
 	var model = new DinnerModel();
 	
 	// And create the instance of ExampleView
-	var exampleView = new ExampleView($("#exampleView"));
+	var dinnerView = new DinnerView($('.dinner_view'));
 
 	$('#vide_container').vide({
         mp4: "video/rst1.mp4",
@@ -13,6 +13,21 @@ $(function() {
     $('.heading').addClass('hanimate');
     $('.subheading').addClass('sanimate');
     $('.reserve').addClass('ranimate');
+
+    $('.nav-menu-toggle, .nav-menu .close').on('click', function() {
+        $('.nav-menu-wrap').toggleClass('active');
+    });
+
+    $(window).resize(function() {
+        if($(window).width() > 990) {
+            if ($(".nav-menu-wrap").hasClass("active")) {
+                $('.nav-menu-wrap').toggleClass('active');
+            }
+        }
+    });
+
+
+
 	/**
 	 * IMPORTANT: app.js is the only place where you are allowed to
 	 * use the $('someSelector') to search for elements in the whole HTML.
