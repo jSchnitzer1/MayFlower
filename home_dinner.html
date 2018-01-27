@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="css/home_dinner.css">
 </head>
 <body>
-<div id="vide_container" class=".container-fluid overlay dinner_view">
-    <form>
+<div id="dinner_view" class=".container-fluid overlay">
+    <section class="fh" >
         <section class="main_banner">
             <div class="col"><h1 class="heading mb-3 ">Welcome To <span>May Flower</span> Resturant</h1>
 
@@ -33,9 +33,13 @@
                                     <div class="main_dock">My&nbsp;&nbsp;Dinner</div>
                                     <div style="text-align: left; padding-top: 0px">
                                         <div style="padding-top: 0px">People:
-                                        <div class="value-button minusGuest" style="color: #ffffff;" value="Decrease Value">-</div>
-                                        <input type="text" class="numberOfGuests" value="1" disabled="disabled"/>
-                                        <div class="value-button plusGuest" style="color: #ffffff;" value="Increase Value">+</div>
+                                            <div class="value-button minusGuest" style="color: #ffffff;"
+                                                 value="Decrease Value">-
+                                            </div>
+                                            <input type="text" class="numberOfGuests" value="1" disabled="disabled"/>
+                                            <div class="value-button plusGuest" style="color: #ffffff;"
+                                                 value="Increase Value">+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="cost" style="border-color: #F3A002;">
@@ -70,7 +74,8 @@
                                             Total: <span style="color: #F3A002;">12345</span> SEK
                                         </div>
                                     </div>
-                                    <p class="confirm"><a href="#" class="btn-outline-white btn-lg" style="color: #F3A002;" >Confirm</a></p>
+                                    <p class="confirm"><a href="#" class="btn-outline-white btn-lg"
+                                                          style="color: #F3A002;">Confirm</a></p>
                                 </div>
                             </li>
                         </ul>
@@ -89,7 +94,7 @@
                             <div class="desktop_dinner_left">
                                 <div class="main_dock">My&nbsp;&nbsp;Dinner</div>
                                 <div style="margin-top: 15px; text-align: center">
-                                    <div>People: </div>
+                                    <div>People:</div>
                                     <div class="value-button minusGuest" value="Decrease Value">-</div>
                                     <input type="text" class="numberOfGuests" value="1" disabled="disabled"/>
                                     <div class="value-button plusGuest" value="Increase Value">+</div>
@@ -135,35 +140,35 @@
             </div>
             <div class="col-sm-10">
                 <div class="container_right">
-                        <div class="top_banner">
-                            <div class="find_dish_lable">Find a dish:</div>
-                            <div>
-                                <div class="search_banner_div">
-                                    <input id="search_txt" type="text" placeholder="Your dish here..." class="search_dish" />
-                                </div>
-                                <div class="search_banner_div">
-                                    <label class="select_dish_label" style="margin: 0px">
-                                        <select class="select_dish">
-                                            <option value="0" selected>All</option>
-                                            <option value="1">Main Course</option>
-                                            <option value="2">Side Dish</option>
-                                            <option value="3">Dessert</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="search_banner_div search_button">
-                                    <a href="#" class="btn-outline-white btn-lg" style="color: #F3A002;" >Search</a>
-                                </div>
+                    <div class="top_banner">
+                        <div class="find_dish_lable">Find a dish:</div>
+                        <div>
+                            <div class="search_banner_div">
+                                <input id="search_txt" type="text" placeholder="Your dish here..." class="search_dish"/>
+                            </div>
+                            <div class="search_banner_div">
+                                <label class="select_dish_label" style="margin: 0px">
+                                    <select class="select_dish">
+                                        <option value="0" selected>All</option>
+                                        <option value="1">Starter</option>
+                                        <option value="2">Main Dish</option>
+                                        <option value="3">Dessert</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="search_banner_div search_button">
+                                <a href="#" class="btn-outline-white btn-lg">Search</a>
                             </div>
                         </div>
-                        <div class="main_container_right">
-test
-                        </div>
+                    </div>
+                    <div class="main_container_right">
+                        test
+                    </div>
 
                 </div>
             </div>
         </section>
-    </form>
+    </section>
 </div>
 
 <!-- jQuery -->

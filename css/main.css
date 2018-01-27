@@ -48,7 +48,7 @@ body {
     opacity: 1;
 }
 
-.heading span {
+.heading span, .hanimate span {
     font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
