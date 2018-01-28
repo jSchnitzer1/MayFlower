@@ -91,7 +91,7 @@ var MenuView = function (container, model) {
                 '<div class="modal_dish_label">' + dish.name + '</div>' +
                 '<div class="modal_dish_type">' + dish.type + '</div>' +
                 '<div class="modal_dish_detail">' +
-                '<div class="modal_rank">rank:';
+                '<div class="modal_rank">rank: ';
 
             var rank = Math.round(dish.rank);
 
