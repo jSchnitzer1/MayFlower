@@ -9,8 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link id="main_css" rel="stylesheet" href="css/main.css">
-    <link id="main_css" rel="stylesheet" href="css/home_dinner.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/home_dinner.css">
 
 </head>
 <body>
@@ -25,15 +25,17 @@
                         <h1 class="heading mb-3 ">Welcome To <span>May Flower</span>
                             Resturant</h1>
                         <h2 class="subheading mb-5 ">Tasty dinner!<br>No One Does It Like May Flower!</h2>
-                        <p class="reserve"><a href="#home_dinner" class="btn-outline-white btn-lg" >Reserve</a></p>
+                        <p class="reserve"><a href="#home_dinner" class="btn-outline-white btn-lg">Reserve</a></p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- dinner pannel-->
         <div id="dinner_panel" style="display: none;">
             <section class="main_banner">
-                <div class="col"><h1 class="hanimate mb-3">Welcome To <span>May Flower</span> Resturant</h1>
+                <div class="col">
+                    <div class="hanimate mb-3">Welcome To <span>May Flower</span> Resturant</div>
 
                 </div>
             </section>
@@ -60,7 +62,7 @@
                                             </div>
                                         </div>
                                         <div class="cost" style="border-color: #F3A002;">
-                                            <table class="table table-sm table-striped borderless">
+                                            <table class="table table-sm table-striped borderless menu_table">
                                                 <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -69,26 +71,12 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>50</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>70</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>120</td>
-                                                </tr>
+
                                                 </tbody>
                                             </table>
 
                                             <div class="total_cost">
-                                                Total: <span style="color: #F3A002;">12345</span> SEK
+                                                Total: <span style="color: #F3A002;"></span> SEK
                                             </div>
                                         </div>
                                         <p class="confirm"><a href="#" class="btn-outline-white btn-lg"
@@ -103,7 +91,7 @@
                                     <i class="fa fa-bars toggle"></i>
                                 </div>
                                 <div class="mini-container-bar">
-                                    Total: <span class="total">12345 </span>SEK
+                                    Total: <span class="total"> </span>SEK
                                 </div>
                             </section>
                             <div style="clear: both;height: 10px;"></div>
@@ -117,7 +105,7 @@
                                         <div class="value-button plusGuest" value="Increase Value">+</div>
                                     </div>
                                     <div class="cost">
-                                        <table class="table table-sm table-striped borderless">
+                                        <table class="table table-sm table-striped borderless menu_table">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
@@ -126,26 +114,12 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>50</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>70</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>120</td>
-                                            </tr>
+
                                             </tbody>
                                         </table>
 
                                         <div class="total_cost">
-                                            Total: <span>12345</span> SEK
+                                            Total: <span></span> SEK
                                         </div>
                                     </div>
                                     <p class="confirm"><a href="#" class="btn-outline-white btn-lg">Confirm</a></p>
@@ -153,7 +127,6 @@
                             </section>
                         </article>
                     </div>
-
                 </div>
                 <div class="col-sm-10">
                     <div class="container_right">
@@ -161,25 +134,55 @@
                             <div class="find_dish_lable">Find a dish:</div>
                             <div>
                                 <div class="search_banner_div">
-                                    <input id="search_txt" type="text" placeholder="Your dish here..." class="search_dish"/>
+                                    <input id="search_txt" type="text" placeholder="Dish or Ingredient"
+                                           class="search_dish"/>
                                 </div>
                                 <div class="search_banner_div">
                                     <label class="select_dish_label" style="margin: 0px">
                                         <select class="select_dish">
                                             <option value="0" selected>All</option>
-                                            <option value="1">Starter</option>
-                                            <option value="2">Main Dish</option>
-                                            <option value="3">Dessert</option>
+                                            <option value="starter">Starter</option>
+                                            <option value="main dish">Main Dish</option>
+                                            <option value="dessert">Dessert</option>
                                         </select>
                                     </label>
                                 </div>
                                 <div class="search_banner_div search_button">
-                                    <a href="#" class="btn-outline-white btn-lg">Search</a>
+                                    <a id="btn_search" href="" class="btn-outline-white btn-lg">Search</a>
                                 </div>
                             </div>
                         </div>
                         <div class="main_container_right">
-                            test
+                            <div class="dishes_content">
+
+                            </div>
+                            <div class="dish_details" style="display: none;">
+                                <div class="d_content_left">
+                                    <div class="d_label"></div>
+                                    <div class="d_img"><img id="d_img" src=""></div>
+                                    <div class="d_desc"></div>
+                                    <p class=""><a id="d_back" href="" class="btn-outline-white btn-lg"
+                                                   style="font-family: 'century_gothic', Verdana, Tahoma;">&lt; Back</a>
+                                    </p>
+                                </div>
+                                <div class="d_content_right">
+                                    <div id="d_label_table" class="d_label">Ingrediants for: <span>3 people</span></div>
+                                    <div class="cost" style="border-color: rgba(255, 210, 127, 0.5);">
+                                        <table id="ing_table" class="table table-sm table-striped borderless">
+                                        </table>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <div style="float: left;">
+                                            <a id="add_menu" href="" class="btn-outline-white btn-lg"
+                                               style="font-family: 'century_gothic', Verdana, Tahoma;">Add To Menu</a>
+                                        </div>
+                                        <div class="total_cost" style="float: right; width: 150px;">
+                                            Total: <span id="d_price" style="color: #ffd27f;"></span> SEK
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -187,7 +190,14 @@
             </section>
         </div>
 
-
+    </section>
+    <section class="footer">
+        <table class="table">
+            <tr>
+                <td class="text-left">© 2018 <span>May Flower</span> ALL RIGHTS RESERVED</td>
+                <td class="text-right">By: Khaled Jendi, and Camilla Björn</td>
+            </tr>
+        </table>
     </section>
 </div>
 
@@ -203,7 +213,7 @@
 
 <!-- The application JavaScript code -->
 <script type='text/javascript'>
-    var view, model, controller, main;
+    var view, model, controller;
 </script>
 <script src="js/screenLoader.js"></script>
 <script src="js/app.js"></script>
@@ -211,7 +221,10 @@
 <script src="js/model/dinnerModel.js"></script>
 <script src="js/view/indexView.js"></script>
 <script src="js/view/dinnerView.js"></script>
+<script src="js/view/menuView.js"></script>
 <script src="js/controller/indexController.js"></script>
 <script src="js/controller/dinnerController.js"></script>
+<script src="js/controller/menuController.js"></script>
+
 </body>
 </html>

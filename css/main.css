@@ -48,7 +48,7 @@ body {
     opacity: 1;
 }
 
-.heading span, .hanimate span {
+.heading span {
     font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
@@ -93,5 +93,36 @@ body {
     box-shadow: inset 0 0 0 1px #ffd27f;
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
 
+.footer span {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
+}
+
+.footer table
+{
+    font-size: 11px;
+    border: none;
+    margin: 0px;
+}
+
+.footer table tr td {
+    padding: 5px;
+}
+
+/* for desktop screens*/
+@media (min-width:990px)  {
+    .footer table tr td {
+        padding: 12px;
+    }
+
+    .footer table {
+        font-size: 13px;
+    }
+}
 

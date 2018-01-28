@@ -1,12 +1,15 @@
 
-form {
-
-}
-
 .main_banner {
-    padding: 20px 0 20px 0;
+    padding: 5px 0 5px 0;
     text-align: center;
+    font-size: 15px;
 }
+
+.main_banner span {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
+}
+
 
 *,
 *:before,
@@ -252,16 +255,13 @@ input[type=text]::-webkit-outer-spin-button {
     padding: 0px 0px 0px 15px;
 }
 
-.container_right > div {
-    padding-bottom: 20px;
-}
-
 .container_right > div > .find_dish_lable {
     margin-bottom: 10px;
 }
 
 .top_banner {
     text-align: center;
+    padding-bottom: 0px;
 }
 
 input.search_dish {
@@ -288,7 +288,6 @@ input.search_dish:focus {
     border-width: 2px 0px 0px 0px;
     border-color: #ffd27f;
     padding: 15px 0px 0px 0px;
-    text-align: center;
 }
 
 .select_dish {
@@ -382,6 +381,107 @@ input.search_dish:focus {
     cursor: pointer;
 }
 
+.dishes_content {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    text-align: center;
+
+}
+
+div.dish_view {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    opacity: 0.7;
+    height: 150px;
+
+}
+
+div.dish_view:hover {
+    box-shadow: inset 0 0 0 5px #ffd27f;
+}
+
+div.dish_view img {
+    width: 100px;
+    height: 100px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+div.desc {
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.responsive {
+    padding: 0px;
+    width: 102px;
+    margin: 10px;
+    height: 150px;
+    overflow: hidden;
+    display: inline-block
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.dish_details{
+    width: 100%;
+    text-align: center;
+    overflow: scroll;
+}
+
+.dish_details .d_content_left {
+    display: block;
+    border-bottom: dashed 1px #fff;
+}
+
+.dish_details .d_content_right {
+    display: block;
+    margin-top: 7px;
+    height: 100%;
+}
+
+.d_label {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.d_label span {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
+}
+
+.d_img {
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.d_img img {
+    width: 250px;
+    height: 200px;
+}
+
+.d_desc {
+
+    text-align: justify;
+    margin-bottom: 5px;
+}
+
+.remove_dish {
+    cursor: pointer;
+}
+.remove_dish:hover {
+    cursor: pointer;
+    color: #ffd27f;
+    font-weight: bolder;
+}
+
+/* for desktop screens*/
 @media (min-width:990px)  {
     .nav-menu-toggle{
         display: none;
@@ -409,10 +509,89 @@ input.search_dish:focus {
 
     .top_banner {
         text-align: left;
+        padding-bottom: 20px;
     }
 
-    .container_right .main_container_right {
+    .main_banner {
+        padding: 20px 0 20px 0px;
+        font-size: 35px;
+    }
+
+    div.dish_view {
+        border-radius: 25px;
+        opacity: 0.3;
+        transition: all 1s;
+        height: 205px;
+        cursor: pointer;
+    }
+
+    div.dish_view:hover {
+        position: absolute;
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+        transition: all 1s;
+        z-index: 999;
+
+        box-shadow: inset 0 0 0 5px #ffd27f;
+        opacity: 0.7;
+    }
+
+    div.dish_view img {
+        width: 150px;
+        height: 150px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+    }
+
+    div.desc {
+        font-size: 13px;
+        width: 150px;
+
+    }
+
+    .responsive {
+        width: 152px;
+        margin: 10px;
+        height: 205px;
+    }
+
+    .dish_details .d_content_left {
+        display: block;
+        float: left;
         text-align: left;
+        width: 45%;
+        border: none;
+
+
     }
 
+    .dish_details .d_content_right {
+        display: block;
+        float: right;
+        text-align: left;
+        width: 50%;
+        margin: 0;
+    }
+
+    .d_label {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .d_img {
+        margin-bottom: 15px;
+        opacity: 0.6;
+    }
+
+    .d_img img {
+        width: 400px;
+        height: 200px;
+    }
+
+    .d_desc {
+        width: 400px;
+        text-align: justify;
+        margin-bottom: 15px;
+    }
 }

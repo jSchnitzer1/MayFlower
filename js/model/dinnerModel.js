@@ -8,6 +8,20 @@
 var DinnerModel = function () {
 
     var totalGuests = 1;
+    var menu = [];
+    var currentViewDish;
+
+    this.setCurrentViewDish = function (id) {
+        currentViewDish = id;
+    }
+
+    this.getCurrentViewDish = function () {
+        return currentViewDish;
+    }
+
+    this.getMenu = function () {
+        return menu;
+    }
 
     this.setNumberOfGuests = function (num) {
         totalGuests = num;
@@ -19,33 +33,62 @@ var DinnerModel = function () {
 
     //Returns the dish that is on the menu for selected type
     this.getSelectedDish = function (type) {
-        //TODO Lab 1
+
     }
 
     //Returns all the dishes on the menu.
     this.getFullMenu = function () {
-        //TODO Lab 1
+        return menu;
     }
 
     //Returns all ingredients for all the dishes on the menu.
     this.getAllIngredients = function () {
-        //TODO Lab 1
+        var ingredients = [];
+        jQuery.each(menu, function (i, val) {
+            jQuery.each(val.ingredients, function (i, val) {
+                if (ingredients.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
+                    ingredients.push(val);
+                }
+            });
+        });
+        return ingredients;
     }
 
     //Returns the total price of the menu (all the ingredients multiplied by number of guests).
     this.getTotalMenuPrice = function () {
-        //TODO Lab 1
+        if(menu) {
+            var total = 0;
+            jQuery.each(menu, function (i, val) {
+                total += val.price;
+            });
+            return total;
+        }
     }
+
+
 
     //Adds the passed dish to the menu. If the dish of that type already exists on the menu
     //it is removed from the menu and the new one added.
     this.addDishToMenu = function (id) {
-        //TODO Lab 1
+        var dish = this.getDish(id);
+        var price = 0;
+
+        jQuery.each(dish.ingredients, function (i, val) {
+            price += (val.price * totalGuests);
+        });
+
+        menu.push({
+            "id": id,
+            "name": dish.name,
+            "price": price
+        });
     }
 
     //Removes dish from menu
     this.removeDishFromMenu = function (id) {
-        //TODO Lab 1
+        menu = jQuery.grep(menu, function(e) {
+            return (e.id != id);
+        });
     }
 
     //function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
@@ -65,7 +108,9 @@ var DinnerModel = function () {
                     found = true;
                 }
             }
-            return dish.type == type && found;
+            if (type == 0) return found;
+            else return dish.type == type && found;
+
         });
     }
 
@@ -95,7 +140,7 @@ var DinnerModel = function () {
         }
         else {
             jQuery.each(dishes, function (i, val) {
-                if(val.type == type) {
+                if (val.type == type) {
                     if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                         result.push(val.name);
                     }
@@ -125,6 +170,8 @@ var DinnerModel = function () {
         'type': 'starter',
         'image': 'toast.jpg',
         'description': "In a large mixing bowl, beat the eggs. Add the milk, brown sugar and nutmeg; stir well to combine. Soak bread slices in the egg mixture until saturated. Heat a lightly oiled griddle or frying pan over medium high heat. Brown slices on both sides, sprinkle with cinnamon and serve hot.",
+        'rank': 4,
+        'sales': 1500,
         'ingredients': [{
             'name': 'eggs',
             'quantity': 0.5,
@@ -157,6 +204,8 @@ var DinnerModel = function () {
         'type': 'starter',
         'image': 'sourdough.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 3,
+        'sales': 1100,
         'ingredients': [{
             'name': 'active dry yeast',
             'quantity': 0.5,
@@ -179,6 +228,8 @@ var DinnerModel = function () {
         'type': 'starter',
         'image': 'bakedbrie.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 2.5,
+        'sales': 500,
         'ingredients': [{
             'name': 'round Brie cheese',
             'quantity': 10,
@@ -201,6 +252,8 @@ var DinnerModel = function () {
         'type': 'main dish',
         'image': 'meatballs.jpg',
         'description': "Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.",
+        'rank': 4.9,
+        'sales': 5500,
         'ingredients': [{
             'name': 'extra lean ground beef',
             'quantity': 115,
@@ -263,6 +316,8 @@ var DinnerModel = function () {
         'type': 'main dish',
         'image': 'bakedbrie.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 4.9,
+        'sales': 5500,
         'ingredients': [{
             'name': 'ingredient 1',
             'quantity': 1,
@@ -285,6 +340,8 @@ var DinnerModel = function () {
         'type': 'main dish',
         'image': 'meatballs.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 4.9,
+        'sales': 5500,
         'ingredients': [{
             'name': 'ingredient 1',
             'quantity': 2,
@@ -307,6 +364,8 @@ var DinnerModel = function () {
         'type': 'main dish',
         'image': 'meatballs.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 4.9,
+        'sales': 5500,
         'ingredients': [{
             'name': 'ingredient 1',
             'quantity': 1,
@@ -329,6 +388,8 @@ var DinnerModel = function () {
         'type': 'dessert',
         'image': 'icecream.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 3.1,
+        'sales': 700,
         'ingredients': [{
             'name': 'ice cream',
             'quantity': 100,
@@ -341,6 +402,8 @@ var DinnerModel = function () {
         'type': 'dessert',
         'image': 'icecream.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 2,
+        'sales': 100,
         'ingredients': [{
             'name': 'ice cream',
             'quantity': 100,
@@ -353,6 +416,8 @@ var DinnerModel = function () {
         'type': 'dessert',
         'image': 'icecream.jpg',
         'description': "Here is how you make it... Lore ipsum...",
+        'rank': 4,
+        'sales': 2500,
         'ingredients': [{
             'name': 'ice cream',
             'quantity': 100,
