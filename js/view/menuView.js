@@ -20,14 +20,15 @@ var MenuView = function (container, model) {
     _this.menu_dishes = container.find(".menu_dishes");
     _this.plusGuest = container.find(".plusGuest");
     _this.minusGuest = container.find(".minusGuest");
-    _this.menu_print_btn = container.find(".menu_print_btn");
+    _this.menu_print_btn = container.find("#menu_print_btn");
+    _this.menu_modal_table = container.find("#menu_modal_table");
 
     var main_banner = container.find(".main_banner");
     var menu_top = container.find(".menu_top");
     var footer = container.find(".footer");
     var menu_content = container.find(".menu_content");
 
-    
+
     _this.updateMenu = function () {
 
         var totalGuests = _this.model.getNumberOfGuests()
@@ -70,6 +71,43 @@ var MenuView = function (container, model) {
         menu_content.height(
             $(window).height() - total_height
         );
+    }
+
+    _this.buildPrintMenu = function () {
+        var menu = _this.model.getMenu();
+        var tr_html = "";
+
+        $("#menu_modal_table tr").remove();
+        jQuery.each(menu, function (i, val) {
+            var dish = _this.model.getDish(val.id);
+            if (i === (menu.length - 1)) {
+                tr_html += '<tr style="border: none">';
+            }
+            else {
+                tr_html += '<tr>';
+            }
+            tr_html += '<td class="modal_img"><img src="images/' + dish.image + '"></td>' +
+                '<td class="modal_desc">' +
+                '<div class="modal_dish_label">' + dish.name + '</div>' +
+                '<div class="modal_dish_type">' + dish.type + '</div>' +
+                '<div class="modal_dish_detail">' +
+                '<div class="modal_rank">rank:';
+
+            var rank = Math.round(dish.rank);
+
+            for (var i = 0; i < rank; i++) {
+                tr_html += '<span class="fa fa-star"></span>';
+            }
+
+            tr_html += '</div>' +
+                '<div class="modal_sales">Sales: ' + dish.sales + '</div>' +
+                '</div>' +
+                '</td>' +
+                '<td class="modal_preperation">' + dish.description + '</td>' +
+                '</tr>';
+
+        });
+        $("#menu_modal_table").html(tr_html);
     }
 
 }

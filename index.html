@@ -217,17 +217,20 @@
 
     </section>
 
-    <div class="modal fade" id="print-menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="print-menu" role="dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Selected Menu</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
+                    <h4 class="modal-title">Menu Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">x</button>
                 </div>
-                <div class="modal-body">
-                    dishes here .....
+                <div id="menu_modal" class="modal-body menu_modal">
+                    <table id="menu_modal_table" class="table borderless">
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Print!</button>
                 </div>
             </div>
         </div>
@@ -251,7 +254,7 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <!-- Responsive video player -->
-<script src="js/jquery.vide.min.js"></script>
+<script src="js/libs/jquery.vide.min.js"></script>
 
 <!-- The application JavaScript code -->
 <script type='text/javascript'>

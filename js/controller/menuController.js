@@ -53,6 +53,7 @@ var MenuController = function (view, model) {
 
     _this.view.menu_print_btn.on("click", function (e) {
         e.preventDefault();
+        _this.view.buildPrintMenu();
     })
 
     _this.init = function () {
