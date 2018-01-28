@@ -14,7 +14,7 @@ var DinnerController = function (view, model) {
 
     _this.load = function () {
         _this.view.container.parent().children('div').each(function () {
-            if($(this).is(":visible")) {
+            if($(this).is(":visible") && $(this).attr("id") != _this.view.container.attr("id")) {
                 $(this).stop().animate({
                     width: "0px",
                     height: "0px",
@@ -23,15 +23,32 @@ var DinnerController = function (view, model) {
                 return false;
             }
         });
-        _this.view.container.fadeIn(500, function () {
+
+        var subLoad = function () {
             _this.view.updateGustsView();
-            if($(window).width() < 990) {
+            if ($(window).width() < 990) {
                 _this.view.updateMainContentHeight("mobile");
             } else {
                 _this.view.updateMainContentHeight("desktop");
             }
+            _this.view.updateMenu();
+        };
 
-        });
+        if( _this.view.container.width() == 0) {
+            _this.view.container.stop().animate({
+                width: "100%",
+                height: "100%",
+                opacity: "1"
+            }, 500, function() {
+                $(this).show();
+                subLoad.call(this);
+            });
+
+        } else {
+            _this.view.container.fadeIn(500, function () {
+                subLoad.call(this);
+            });
+        }
     }
 
     _this.view.plusButton.on('click', function () {
@@ -160,6 +177,17 @@ var DinnerController = function (view, model) {
         _this.model.getMenu();
         _this.view.updateMenu();
     }
+
+    _this.view.confirm_dinner.on("click", function (e) {
+        e.preventDefault();
+        var menu = _this.model.getMenu();
+        if(menu && menu.length > 0) {
+            window.location.hash = "#menu";
+        }
+        else {
+            alert("Your menu is empty!")
+        }
+    })
 
     _this.init = function () {
         _this.load();

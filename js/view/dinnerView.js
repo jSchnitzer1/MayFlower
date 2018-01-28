@@ -31,6 +31,7 @@ var DinnerView = function (container, model) {
     _this.d_price = container.find("#d_price");
     _this.d_label_table = container.find("#d_label_table");
     _this.menu_table = container.find(".menu_table");
+    _this.confirm_dinner = container.find(".confirm");
 
     var main_banner = container.find(".main_banner");
     var footer = container.parents().find(".footer");

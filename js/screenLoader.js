@@ -13,6 +13,11 @@ function loadScreen() {
             controller = new DinnerController(view, model);
             controller.init();
             break;
+        case "menu":
+            view = new MenuView($("#menu_panel"), model);
+            controller = new MenuController(view, model);
+            controller.init();
+            break;
         default:
             view = new IndexView($("#index_panel"), model);
             controller = new IndexController(view, model);

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/home_dinner.css">
-
+    <link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
 <div id="general_view" class=".container-fluid overlay">
@@ -79,7 +79,7 @@
                                                 Total: <span style="color: #F3A002;"></span> SEK
                                             </div>
                                         </div>
-                                        <p class="confirm"><a href="#" class="btn-outline-white btn-lg"
+                                        <p class="confirm"><a href="" class="btn-outline-white btn-lg"
                                                               style="color: #F3A002;">Confirm</a></p>
                                     </div>
                                 </li>
@@ -91,7 +91,7 @@
                                     <i class="fa fa-bars toggle"></i>
                                 </div>
                                 <div class="mini-container-bar">
-                                    Total: <span class="total"> </span>SEK
+                                    Total: <span class="total"> </span> SEK
                                 </div>
                             </section>
                             <div style="clear: both;height: 10px;"></div>
@@ -122,7 +122,7 @@
                                             Total: <span></span> SEK
                                         </div>
                                     </div>
-                                    <p class="confirm"><a href="#" class="btn-outline-white btn-lg">Confirm</a></p>
+                                    <p class="confirm"><a href="" class="btn-outline-white btn-lg">Confirm</a></p>
                                 </div>
                             </section>
                         </article>
@@ -190,7 +190,49 @@
             </section>
         </div>
 
+        <!-- menu pannel-->
+        <div id="menu_panel" style="display: none;">
+            <div class="main_banner">
+                <div class="col">
+                    <div class="hanimate mb-3">Welcome To <span>May Flower</span> Resturant</div>
+
+                </div>
+            </div>
+            <div class="menu_top" style="width: 100%">
+                <div class="float-left menu_people">My Dinner: <span id="menu_total_guest">3 People</span></div>
+                <div class="float-right menu_back_btn">
+                    <a id="menu_back" href="#home_dinner" class="btn-outline-white btn-lg">&lt; &nbsp;Edit &nbsp;Dinner</a>
+                </div>
+            </div>
+            <div class="menu_content">
+                <div class="menu_dishes">
+
+                </div>
+                <div class="menu_price">Total Price:<br><span id="menu_total_price"></span></div>
+                <div class="menu_print">
+                    <a id="menu_print_btn" data-toggle="modal" data-target="#print-menu" href="" class="btn-outline-white btn-lg">Print Recipe</a>
+                </div>
+            </div>
+        </div>
+
     </section>
+
+    <div class="modal fade" id="print-menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Selected Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    dishes here .....
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="footer">
         <table class="table">
             <tr>
@@ -219,9 +261,11 @@
 <script src="js/app.js"></script>
 
 <script src="js/model/dinnerModel.js"></script>
+
 <script src="js/view/indexView.js"></script>
 <script src="js/view/dinnerView.js"></script>
 <script src="js/view/menuView.js"></script>
+
 <script src="js/controller/indexController.js"></script>
 <script src="js/controller/dinnerController.js"></script>
 <script src="js/controller/menuController.js"></script>

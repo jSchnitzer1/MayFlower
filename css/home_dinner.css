@@ -519,7 +519,7 @@ div.desc {
 
     div.dish_view {
         border-radius: 25px;
-        opacity: 0.3;
+        opacity: 0.4;
         transition: all 1s;
         height: 205px;
         cursor: pointer;
