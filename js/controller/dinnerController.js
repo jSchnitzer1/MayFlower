@@ -25,6 +25,7 @@ var DinnerController = function (view, model) {
         });
 
         var subLoad = function () {
+            _this.controlNavMenuEvents();
             _this.view.updateGustsView();
             if ($(window).width() < 990) {
                 _this.view.updateMainContentHeight("mobile");
@@ -80,10 +81,35 @@ var DinnerController = function (view, model) {
         _this.view.updateGustsView();
         _this.view.updateCurrentViewDishTable();
     });
+    
+    _this.controlNavMenuEvents = function () {
+        var nav_menu_events = $._data(_this.view.nav_menu_toggle[0], "events" );
 
-    _this.view.nav_menu_toggle.add(_this.view.nav_menu_close).on('click', function() {
-        _this.view.nav_menu_wrap.toggleClass('active');
-    });
+        var bind = function () {
+            _this.view.nav_menu_toggle.add(_this.view.nav_menu_close).on('click', function () {
+                _this.view.nav_menu_wrap.toggleClass('active');
+            });
+        };
+
+        var unbind = function () {
+            _this.view.nav_menu_toggle.off('click');
+            _this.view.nav_menu_close.off('click');
+        };
+
+        if(nav_menu_events) {
+            var click_events_count = nav_menu_events.click.length;
+            if(click_events_count == 0) {
+                bind();
+            }
+            else if(nav_menu_events > 1) {
+                unbind();
+                bind();
+            }
+        }
+        else {
+            bind();
+        }
+    }
 
     $(window).resize(function() {
         if($(window).width() > 990) {
@@ -168,7 +194,7 @@ var DinnerController = function (view, model) {
         });
         if(!inMenu) {
             _this.model.addDishToMenu(id);
-            _this.view.updateMenu();
+            _this.view.updateMenu("open_menu");
         }
     })
     

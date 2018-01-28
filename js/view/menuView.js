@@ -5,6 +5,7 @@
  * - Last update in 2018-01-26
  */
 
+
 var MenuView = function (container, model) {
 
     var _this = this;

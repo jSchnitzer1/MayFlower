@@ -158,7 +158,13 @@ var DinnerView = function (container, model) {
 
         top_banner.fadeOut(400);
         dishes_content.fadeOut(400);
-        dish_details.fadeIn(1000);
+        dish_details.fadeIn(1000, function() {
+            if ($(window).width() < 990) {
+                _this.updateMainContentHeight("mobile");
+            } else {
+                _this.updateMainContentHeight("desktop");
+            }
+        });
     }
 
     _this.backToDishesView = function () {
@@ -167,7 +173,7 @@ var DinnerView = function (container, model) {
         dishes_content.fadeIn(1000);
     }
 
-    _this.updateMenu = function () {
+    _this.updateMenu = function (mode) {
         var menu = _this.model.getMenu();
         if (menu) {
             $(".menu_table tbody tr").remove();
@@ -182,6 +188,12 @@ var DinnerView = function (container, model) {
             total_cost.html(_this.model.getTotalMenuPrice());
             total.html(_this.model.getTotalMenuPrice());
 
+            //for mobile usage:
+            if(mode && mode == "open_menu") {
+                if($(window).width() < 970 && !_this.nav_menu_wrap.hasClass("active")) {
+                    _this.nav_menu_wrap.toggleClass('active');
+                }
+            }
         }
     }
 }
