@@ -186,7 +186,7 @@ var DinnerController = function (view, model) {
         e.preventDefault();
         var id = $(this).attr("href");
         var inMenu = false;
-        jQuery.each(_this.model.getMenu(), function (i, val) {
+        _.each(_this.model.getMenu(), function (val, i) {
             if(val.id == id){
                 inMenu = true;
                 return false;

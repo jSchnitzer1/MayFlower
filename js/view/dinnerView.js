@@ -55,8 +55,8 @@ var DinnerView = function (container, model) {
             var price = 0;
 
             _this.d_label_table.html(dish.name + " for: " + "<span>" + totalGuests + " people</span>");
-            $("#ing_table tr").remove();
-            jQuery.each(dish.ingredients, function (i, val) {
+            _this.ing_table.children('tbody').children('tr').remove();
+            _.each(dish.ingredients, function (val, i) {
                 price += (val.price * totalGuests);
                 var ing_html = '<tr>' +
                     '<th scope="row">' + val.name + '</th>' +
@@ -113,7 +113,7 @@ var DinnerView = function (container, model) {
     _this.updateDishesView = function (dishes) {
         if (dishes) {
             var dish_html = "";
-            $.each(dishes, function (i, val) {
+            _.each(dishes, function (val, i) {
                 dish_html += '<div class="responsive">' +
                     '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
                     '<a class="dish_view_select">' +
@@ -141,8 +141,8 @@ var DinnerView = function (container, model) {
         _this.d_back.attr("href", id);
 
         _this.d_label_table.html(dish.name + " for: " + "<span>" + totalGuests + " people</span>");
-        $("#ing_table tr").remove();
-        jQuery.each(dish.ingredients, function (i, val) {
+        _this.ing_table.children('tbody').children('tr').remove();
+        _.each(dish.ingredients, function (val, i) {
             price += (val.price * totalGuests);
             var ing_html = '<tr>' +
                 '<th scope="row">' + val.name + '</th>' +
@@ -176,14 +176,14 @@ var DinnerView = function (container, model) {
     _this.updateMenu = function (mode) {
         var menu = _this.model.getMenu();
         if (menu) {
-            $(".menu_table tbody tr").remove();
-            jQuery.each(menu, function (i, val) {
+            _this.menu_table.children('tbody').children('tr').remove();
+            _.each(menu, function (val, i) {
                 var menu_html = '<tr>' +
                     '<th scope="row" class="remove_dish" onclick="controller.removeDishFromMenu(' + val.id + ')">X</th>' +
                     '<td>' + val.name + '</td>' +
                     '<td>' + val.price + '</td>' +
                     '</tr>';
-                $(".menu_table tbody").append(menu_html);
+                _this.menu_table.append(menu_html);
             });
             total_cost.html(_this.model.getTotalMenuPrice());
             total.html(_this.model.getTotalMenuPrice());

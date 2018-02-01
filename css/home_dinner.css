@@ -240,6 +240,16 @@ input[type=text]::-webkit-outer-spin-button {
     color: #ffd27f;
 }
 
+.total-cost-d-price {
+    width: 100%;
+    text-align: right;
+}
+
+.total-cost-d-price span {
+    font-family: 'bank_gothic', Verdana, Tahoma;
+    color: #ffd27f;
+}
+
 .confirm {
     width: 100%;
     margin-top: 20px;

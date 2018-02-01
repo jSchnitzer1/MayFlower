@@ -2,7 +2,7 @@
  * Coded by:
  * - Khaled Jendi
  * - Camilla Björn
- * - Last update in 2018-01-26
+ * - Last update in 2018-02-01
  */
 
 var DinnerModel = function () {
@@ -44,8 +44,8 @@ var DinnerModel = function () {
     //Returns all ingredients for all the dishes on the menu.
     this.getAllIngredients = function () {
         var ingredients = [];
-        jQuery.each(menu, function (i, val) {
-            jQuery.each(val.ingredients, function (i, val) {
+        _.each(menu, function(val, i) {
+            _.each(val.ingredients, function (val, i) {
                 if (ingredients.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                     ingredients.push(val);
                 }
@@ -58,14 +58,12 @@ var DinnerModel = function () {
     this.getTotalMenuPrice = function () {
         if(menu) {
             var total = 0;
-            jQuery.each(menu, function (i, val) {
+            _.each(menu, function (val, i) {
                 total += val.price;
             });
             return total;
         }
     }
-
-
 
     //Adds the passed dish to the menu. If the dish of that type already exists on the menu
     //it is removed from the menu and the new one added.
@@ -73,7 +71,7 @@ var DinnerModel = function () {
         var dish = this.getDish(id);
         var price = 0;
 
-        jQuery.each(dish.ingredients, function (i, val) {
+        _.each(dish.ingredients, function (val, i) {
             price += (val.price * totalGuests);
         });
 
@@ -126,11 +124,11 @@ var DinnerModel = function () {
     this.getDishesNames = function (type) {
         var result = [];
         if (!type || 0 === type.length) {
-            jQuery.each(dishes, function (i, val) {
+            _.each(dishes, function (val, i) {
                 if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                     result.push(val.name);
                 }
-                jQuery.each(val.ingredients, function (i, val) {
+                _.each(val.ingredients, function (val, i) {
                     if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                         result.push(val.name);
                     }
@@ -139,12 +137,12 @@ var DinnerModel = function () {
             return result;
         }
         else {
-            jQuery.each(dishes, function (i, val) {
+            _.each(dishes, function (val, i) {
                 if (val.type == type) {
                     if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                         result.push(val.name);
                     }
-                    jQuery.each(val.ingredients, function (i, val) {
+                    _.each(val.ingredients, function (val, i) {
                         if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                             result.push(val.name);
                         }

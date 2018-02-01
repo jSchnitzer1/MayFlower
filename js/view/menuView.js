@@ -21,7 +21,7 @@ var MenuView = function (container, model) {
     _this.plusGuest = container.find(".plusGuest");
     _this.minusGuest = container.find(".minusGuest");
     _this.menu_print_btn = container.find("#menu_print_btn");
-    _this.menu_modal_table = container.find("#menu_modal_table");
+    _this.menu_modal_table = container.parents().find("#menu_modal_table");
 
     var main_banner = container.find(".main_banner");
     var menu_top = container.find(".menu_top");
@@ -39,7 +39,7 @@ var MenuView = function (container, model) {
         _this.menu_total_guest.html(totalGuests + " People");
         _this.menu_total_price.html("SEK " + totalPrice);
 
-        jQuery.each(menu, function (i, val) {
+        _.each(menu, function (val, i) {
             var dish = _this.model.getDish(val.id);
             menu_html += '<div class="responsive">' +
                 '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
@@ -75,10 +75,11 @@ var MenuView = function (container, model) {
 
     _this.buildPrintMenu = function () {
         var menu = _this.model.getMenu();
-        var tr_html = "";
 
-        $("#menu_modal_table tr").remove();
-        jQuery.each(menu, function (i, val) {
+
+        _this.menu_modal_table.children('tbody').children('tr').remove();
+        _.each(menu, function (val, i) {
+            var tr_html = "";
             var dish = _this.model.getDish(val.id);
             if (i === (menu.length - 1)) {
                 tr_html += '<tr style="border: none">';
@@ -106,8 +107,9 @@ var MenuView = function (container, model) {
                 '<td class="modal_preperation">' + dish.description + '</td>' +
                 '</tr>';
 
+            _this.menu_modal_table.append(tr_html);
+
         });
-        $("#menu_modal_table").html(tr_html);
     }
 
 }
