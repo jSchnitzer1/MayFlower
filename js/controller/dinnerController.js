@@ -13,19 +13,10 @@ var DinnerController = function (view, model) {
     _this.view = view;
 
     _this.load = function () {
-        _this.view.container.parent().children('div').each(function () {
-            if($(this).is(":visible") && $(this).attr("id") != _this.view.container.attr("id")) {
-                $(this).stop().animate({
-                    width: "0px",
-                    height: "0px",
-                    opacity: "0"
-                }, 400, function() {$(this).hide()});
-                return false;
-            }
-        });
 
         var subLoad = function () {
             _this.controlNavMenuEvents();
+            _this.controllPlusMinusEvents();
             _this.view.updateGustsView();
             if ($(window).width() < 990) {
                 _this.view.updateMainContentHeight("mobile");
@@ -52,35 +43,6 @@ var DinnerController = function (view, model) {
         }
     }
 
-    _this.view.plusButton.on('click', function () {
-        var value = parseInt(_this.model.getNumberOfGuests());
-
-        if (value < 10) {
-            value = value + 1;
-        }
-        else {
-            value = 10;
-        }
-
-        _this.model.setNumberOfGuests(value);
-        _this.view.updateGustsView();
-        _this.view.updateCurrentViewDishTable();
-    });
-
-    _this.view.minusButton.on('click', function () {
-        var value = parseInt(_this.model.getNumberOfGuests());
-
-        if (value > 1) {
-            value = value - 1;
-        }
-        else {
-            value = 1;
-        }
-
-        _this.model.setNumberOfGuests(value);
-        _this.view.updateGustsView();
-        _this.view.updateCurrentViewDishTable();
-    });
     
     _this.controlNavMenuEvents = function () {
         var nav_menu_events = $._data(_this.view.nav_menu_toggle[0], "events" );
@@ -102,6 +64,53 @@ var DinnerController = function (view, model) {
                 bind();
             }
             else if(nav_menu_events > 1) {
+                unbind(); // remove all current events
+                bind(); // engage only one event
+            }
+        }
+        else {
+            bind();
+        }
+    }
+
+    _this.controllPlusMinusEvents = function() {
+        var plus_button_events = $._data(_this.view.plusButton[0], "events" );
+        var minus_button_events = $._data(_this.view.minusButton[0], "events" );
+
+        var bind = function () {
+            _this.view.plusButton.on('click', function () {
+                var value = parseInt(_this.model.getNumberOfGuests());
+
+                if(value > 10) return;
+
+                if(_this.model.setNumberOfGuests(value, 'plus')) {
+                    _this.view.updateGustsView();
+                    _this.view.updateCurrentViewDishTable();
+                }
+            });
+            _this.view.minusButton.on('click', function () {
+                var value = parseInt(_this.model.getNumberOfGuests());
+
+                if(value < 0) return;
+
+                if(_this.model.setNumberOfGuests(value, 'minus')) {
+                    _this.view.updateGustsView();
+                    _this.view.updateCurrentViewDishTable();
+                }
+            });
+        };
+
+        var unbind = function () {
+            _this.view.plusButton.off('click');
+            _this.view.minusButton.off('click');
+        };
+
+        if(plus_button_events) {
+            var click_events_count = plus_button_events.click.length;
+            if(click_events_count == 0) {
+                bind();
+            }
+            else if(plus_button_events > 1) {
                 unbind();
                 bind();
             }

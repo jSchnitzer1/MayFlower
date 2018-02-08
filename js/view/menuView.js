@@ -18,10 +18,9 @@ var MenuView = function (container, model) {
     _this.menu_total_guest = container.find("#menu_total_guest");
     _this.menu_total_price = container.find("#menu_total_price");
     _this.menu_dishes = container.find(".menu_dishes");
-    _this.plusGuest = container.find(".plusGuest");
-    _this.minusGuest = container.find(".minusGuest");
     _this.menu_print_btn = container.find("#menu_print_btn");
     _this.menu_modal_table = container.parents().find("#menu_modal_table");
+    _this.print_menu_table = container.parents().find("#print_menu_table");
 
     var main_banner = container.find(".main_banner");
     var menu_top = container.find(".menu_top");
@@ -52,11 +51,6 @@ var MenuView = function (container, model) {
         });
 
         _this.menu_dishes.html(menu_html);
-    }
-
-    _this.offUnusedControls = function () {
-        _this.plusGuest.off("click");
-        _this.minusGuest.off("click");
     }
 
     _this.updateMainContentHeight = function () {

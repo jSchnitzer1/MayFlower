@@ -11,6 +11,19 @@ var DinnerModel = function () {
     var menu = [];
     var currentViewDish;
 
+    var observers = [];
+
+    this.addObserver = function(observer) {
+        // should we have key for the observers to know what should be updated?
+        this.observers.push(observer);
+    }
+
+    var notifyObservers = function() {
+        _.each(observers, function (val, i) {
+            // what should be done exactly in notify observers?
+        });
+    }
+
     this.setCurrentViewDish = function (id) {
         currentViewDish = id;
     }
@@ -23,8 +36,35 @@ var DinnerModel = function () {
         return menu;
     }
 
-    this.setNumberOfGuests = function (num) {
-        totalGuests = num;
+    this.setNumberOfGuests = function (num, sign) {
+        if (num && parseInt(num)) {
+            if (sign === 'plus') {
+
+                if (num < 10) {
+                    num = num + 1;
+                }
+                else {
+                    num = 10;
+                }
+                totalGuests = num;
+                return true;
+            }
+            else {
+
+                if (num > 1) {
+                    num = num - 1;
+                }
+                else {
+                    num = 1;
+                }
+                totalGuests = num;
+                return true;
+            }
+            return false;
+        }
+
+        return false;
+
     }
 
     this.getNumberOfGuests = function () {
@@ -44,7 +84,7 @@ var DinnerModel = function () {
     //Returns all ingredients for all the dishes on the menu.
     this.getAllIngredients = function () {
         var ingredients = [];
-        _.each(menu, function(val, i) {
+        _.each(menu, function (val, i) {
             _.each(val.ingredients, function (val, i) {
                 if (ingredients.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
                     ingredients.push(val);
@@ -56,7 +96,7 @@ var DinnerModel = function () {
 
     //Returns the total price of the menu (all the ingredients multiplied by number of guests).
     this.getTotalMenuPrice = function () {
-        if(menu) {
+        if (menu) {
             var total = 0;
             _.each(menu, function (val, i) {
                 total += val.price;
@@ -78,13 +118,14 @@ var DinnerModel = function () {
         menu.push({
             "id": id,
             "name": dish.name,
-            "price": price
+            "price": price,
+            "numPeople" : totalGuests
         });
     }
 
     //Removes dish from menu
     this.removeDishFromMenu = function (id) {
-        menu = jQuery.grep(menu, function(e) {
+        menu = jQuery.grep(menu, function (e) {
             return (e.id != id);
         });
     }

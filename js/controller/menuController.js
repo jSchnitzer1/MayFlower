@@ -13,20 +13,8 @@ var MenuController = function (view, model) {
     _this.view = view;
 
     _this.load = function () {
-        _this.view.container.parent().children('div').each(function () {
-            if($(this).is(":visible") && $(this).attr("id") != _this.view.container.attr("id")) {
-                $(this).stop().animate({
-                    width: "0px",
-                    height: "0px",
-                    opacity: "0"
-                }, 400, function() {$(this).hide()});
-                return false;
-            }
-        });
-
         var subLoad = function () {
             _this.view.updateMenu();
-            _this.view.offUnusedControls();
             _this.view.updateMainContentHeight();
         };
 
@@ -56,7 +44,15 @@ var MenuController = function (view, model) {
         _this.view.buildPrintMenu();
     })
 
+    _this.view.print_menu_table.on("click", function () {
+        var newWin = window.open("");
+        newWin.document.write(_this.view.menu_modal_table.html());
+        newWin.print();
+        newWin.close();
+    });
+
     _this.init = function () {
         _this.load();
     }
+
 }

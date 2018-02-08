@@ -14,17 +14,6 @@ var IndexController = function (view, model) {
     _this.view = view;
 
     _this.load = function () {
-
-        _this.view.container.parent().children('div').each(function () {
-            if($(this).is(":visible")) {
-                $(this).stop().animate({
-                    width: "0px",
-                    height: "0px",
-                    opacity: "0"
-                }, 400, function() {$(this).hide()});
-                return false;
-            }
-        });
         _this.view.container.fadeIn(500);
 
         _this.view.container.css("display", "block");

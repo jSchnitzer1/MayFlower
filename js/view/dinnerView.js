@@ -182,6 +182,7 @@ var DinnerView = function (container, model) {
                     '<th scope="row" class="remove_dish" onclick="controller.removeDishFromMenu(' + val.id + ')">X</th>' +
                     '<td>' + val.name + '</td>' +
                     '<td>' + val.price + '</td>' +
+                    '<td>' + val.numPeople + '</td>' +
                     '</tr>';
                 _this.menu_table.append(menu_html);
             });

@@ -17,4 +17,8 @@ $(function() {
     // load dinner model: loaded once and for all!
     model = new DinnerModel();
 
+    // start screen loader: loaded once and for all!
+    screenLoader = new ScreenLoader();
+
+
 });
