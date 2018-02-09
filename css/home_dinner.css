@@ -6,7 +6,7 @@
 }
 
 .main_banner span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
+    font-family: 'berkshireswash', Verdana, Tahoma;
     color: #ffd27f;
 }
 
@@ -115,7 +115,6 @@
 }
 
 .total {
-    font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
 
@@ -237,7 +236,6 @@ input[type=text]::-webkit-outer-spin-button {
 }
 
 .total_cost span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
 
@@ -247,7 +245,6 @@ input[type=text]::-webkit-outer-spin-button {
 }
 
 .total-cost-d-price span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
 

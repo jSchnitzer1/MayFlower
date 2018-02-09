@@ -14,7 +14,8 @@
 }
 
 #menu_back {
-    font-size: 23px;
+    font-family: "century_gothic", Verdana, Tahoma;
+    font-size: 25px;
 }
 
 .menu_people span {
@@ -49,7 +50,6 @@
 }
 
 .menu_price span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
     color: #ffd27f;
 }
 

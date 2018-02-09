@@ -36,7 +36,7 @@ var MenuView = function (container, model) {
         var menu_html = "";
 
         _this.menu_total_guest.html(totalGuests + " People");
-        _this.menu_total_price.html("SEK " + totalPrice);
+        _this.menu_total_price.html(totalPrice + ":- SEK");
 
         _.each(menu, function (val, i) {
             var dish = _this.model.getDish(val.id);

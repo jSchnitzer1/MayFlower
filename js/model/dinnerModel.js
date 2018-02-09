@@ -11,21 +11,22 @@ var DinnerModel = function () {
     var menu = [];
     var currentViewDish;
 
+    //For better understanding of design pattern: https://sourcemaking.com/design_patterns/observer
     var observers = [];
 
     this.addObserver = function(observer) {
-        // should we have key for the observers to know what should be updated?
-        this.observers.push(observer);
+        observers.push(observer);
     }
 
-    var notifyObservers = function() {
+    this.notifyObservers = function(obj) {
         _.each(observers, function (val, i) {
-            // what should be done exactly in notify observers?
+            val.update(obj);
         });
     }
 
     this.setCurrentViewDish = function (id) {
         currentViewDish = id;
+        this.notifyObservers();
     }
 
     this.getCurrentViewDish = function () {
@@ -47,6 +48,7 @@ var DinnerModel = function () {
                     num = 10;
                 }
                 totalGuests = num;
+                this.notifyObservers();
                 return true;
             }
             else {
@@ -58,6 +60,7 @@ var DinnerModel = function () {
                     num = 1;
                 }
                 totalGuests = num;
+                this.notifyObservers();
                 return true;
             }
             return false;
@@ -121,6 +124,7 @@ var DinnerModel = function () {
             "price": price,
             "numPeople" : totalGuests
         });
+        this.notifyObservers();
     }
 
     //Removes dish from menu
@@ -128,6 +132,7 @@ var DinnerModel = function () {
         menu = jQuery.grep(menu, function (e) {
             return (e.id != id);
         });
+        this.notifyObservers();
     }
 
     //function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")

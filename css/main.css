@@ -8,6 +8,11 @@
     src: url(../fonts/bank_gothic.ttf) format("truetype");
 }
 
+@font-face {
+    font-family: "berkshireswash";
+    src: url(../fonts/berkshireswash.ttf) format("truetype");
+}
+
 html {
     height: 100%;
 }
@@ -49,7 +54,7 @@ body {
 }
 
 .heading span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
+    font-family: 'berkshireswash', Verdana, Tahoma;
     color: #ffd27f;
 }
 
@@ -100,7 +105,7 @@ body {
 }
 
 .footer span {
-    font-family: 'bank_gothic', Verdana, Tahoma;
+    font-family: 'berkshireswash', Verdana, Tahoma;
     color: #ffd27f;
 }
 
