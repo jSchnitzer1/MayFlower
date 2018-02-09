@@ -124,7 +124,7 @@ var DinnerModel = function () {
             "price": price,
             "numPeople" : totalGuests
         });
-        this.notifyObservers();
+        this.notifyObservers({menu_mode: "open_menu"});
     }
 
     //Removes dish from menu

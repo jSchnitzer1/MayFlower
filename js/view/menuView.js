@@ -27,83 +27,90 @@ var MenuView = function (container, model) {
     var footer = container.find(".footer");
     var menu_content = container.find(".menu_content");
 
+    _this.update = function (obj) {
+        var updateMenu = function () {
 
-    _this.updateMenu = function () {
+            var totalGuests = _this.model.getNumberOfGuests()
+            var menu = _this.model.getMenu();
+            var totalPrice = _this.model.getTotalMenuPrice();
+            var menu_html = "";
 
-        var totalGuests = _this.model.getNumberOfGuests()
-        var menu = _this.model.getMenu();
-        var totalPrice = _this.model.getTotalMenuPrice();
-        var menu_html = "";
+            _this.menu_total_guest.html(totalGuests + " People");
+            _this.menu_total_price.html(totalPrice + ":- SEK");
 
-        _this.menu_total_guest.html(totalGuests + " People");
-        _this.menu_total_price.html(totalPrice + ":- SEK");
+            _.each(menu, function (val, i) {
+                var dish = _this.model.getDish(val.id);
+                menu_html += '<div class="responsive">' +
+                    '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
+                    '<a class="dish_view_select">' +
+                    '<img src="images/' + dish.image + '" alt="' + dish.name + '">' +
+                    '</a>' +
+                    '<div class="desc">' + dish.name + '</div>' +
+                    '</div>' +
+                    '</div>';
+            });
 
-        _.each(menu, function (val, i) {
-            var dish = _this.model.getDish(val.id);
-            menu_html += '<div class="responsive">' +
-                '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
-                '<a class="dish_view_select">' +
-                '<img src="images/' + dish.image + '" alt="' + dish.name + '">' +
-                '</a>' +
-                '<div class="desc">' + dish.name + '</div>' +
-                '</div>' +
-                '</div>';
-        });
+            _this.menu_dishes.html(menu_html);
+        }
 
-        _this.menu_dishes.html(menu_html);
-    }
+        _this.updateMainContentHeight = function () {
+            var total_height = 0;
 
-    _this.updateMainContentHeight = function () {
-        var total_height = 0;
+            total_height = main_banner.outerHeight() +
+                footer.outerHeight() +
+                menu_top.outerHeight();
 
-        total_height = main_banner.outerHeight() +
-            footer.outerHeight() +
-            menu_top.outerHeight();
+            total_height += 140;
 
-        total_height += 50; // lets consider 15 as margin bottom !
+            menu_content.height(
+                $(window).height() - total_height
+            );
+        }
 
-        menu_content.height(
-            $(window).height() - total_height
-        );
-    }
-
-    _this.buildPrintMenu = function () {
-        var menu = _this.model.getMenu();
+        var buildPrintMenu = function () {
+            var menu = _this.model.getMenu();
 
 
-        _this.menu_modal_table.children('tbody').children('tr').remove();
-        _.each(menu, function (val, i) {
-            var tr_html = "";
-            var dish = _this.model.getDish(val.id);
-            if (i === (menu.length - 1)) {
-                tr_html += '<tr style="border: none">';
-            }
-            else {
-                tr_html += '<tr>';
-            }
-            tr_html += '<td class="modal_img"><img src="images/' + dish.image + '"></td>' +
-                '<td class="modal_desc">' +
-                '<div class="modal_dish_label">' + dish.name + '</div>' +
-                '<div class="modal_dish_type">' + dish.type + '</div>' +
-                '<div class="modal_dish_detail">' +
-                '<div class="modal_rank">rank: ';
+            _this.menu_modal_table.children('tbody').children('tr').remove();
+            _.each(menu, function (val, i) {
+                var tr_html = "";
+                var dish = _this.model.getDish(val.id);
+                if (i === (menu.length - 1)) {
+                    tr_html += '<tr style="border: none">';
+                }
+                else {
+                    tr_html += '<tr>';
+                }
+                tr_html += '<td class="modal_img"><img src="images/' + dish.image + '"></td>' +
+                    '<td class="modal_desc">' +
+                    '<div class="modal_dish_label">' + dish.name + '</div>' +
+                    '<div class="modal_dish_type">' + dish.type + '</div>' +
+                    '<div class="modal_dish_detail">' +
+                    '<div class="modal_rank">rank: ';
 
-            var rank = Math.round(dish.rank);
+                var rank = Math.round(dish.rank);
 
-            for (var i = 0; i < rank; i++) {
-                tr_html += '<span class="fa fa-star"></span>';
-            }
+                for (var i = 0; i < rank; i++) {
+                    tr_html += '<span class="fa fa-star"></span>';
+                }
 
-            tr_html += '</div>' +
-                '<div class="modal_sales">Sales: ' + dish.sales + '</div>' +
-                '</div>' +
-                '</td>' +
-                '<td class="modal_preperation">' + dish.description + '</td>' +
-                '</tr>';
+                tr_html += '</div>' +
+                    '<div class="modal_sales">Sales: ' + dish.sales + '</div>' +
+                    '</div>' +
+                    '</td>' +
+                    '<td class="modal_preperation">' + dish.description + '</td>' +
+                    '</tr>';
 
-            _this.menu_modal_table.append(tr_html);
+                _this.menu_modal_table.append(tr_html);
 
-        });
-    }
+            });
+        }
+
+        updateMenu();
+        _this.updateMainContentHeight();
+        buildPrintMenu();
+    };
+
+    _this.update();
 
 }

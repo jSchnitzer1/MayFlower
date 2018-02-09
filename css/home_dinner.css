@@ -478,6 +478,7 @@ div.desc {
 
     text-align: justify;
     margin-bottom: 5px;
+    font-size: 12px;
 }
 
 .remove_dish {
@@ -601,5 +602,6 @@ div.desc {
         width: 400px;
         text-align: justify;
         margin-bottom: 15px;
+        font-size: 15px;
     }
 }

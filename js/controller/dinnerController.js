@@ -17,6 +17,7 @@ var DinnerController = function (view, model) {
         var subLoad = function () {
             _this.controlNavMenuEvents();
             _this.controllPlusMinusEvents();
+            _this.view.updateMainContentHeight();
         };
 
         if(_this.view.container.width() == 0) {
@@ -68,31 +69,17 @@ var DinnerController = function (view, model) {
 
     _this.controllPlusMinusEvents = function() {
         var plus_button_events = $._data(_this.view.plusButton[0], "events" );
-        var minus_button_events = $._data(_this.view.minusButton[0], "events" );
 
         var bind = function () {
             _this.view.plusButton.on('click', function () {
                 var value = parseInt(_this.model.getNumberOfGuests());
-
-                if(value > 10) return;
-
-                if(_this.model.setNumberOfGuests(value, 'plus')) {
-                    //_this.view.updateGustsView();
-                    //_this.view.updateCurrentViewDishTable();
-                }
+                _this.model.setNumberOfGuests(value, 'plus');
             });
             _this.view.minusButton.on('click', function () {
                 var value = parseInt(_this.model.getNumberOfGuests());
-
-                if(value < 0) return;
-
-                if(_this.model.setNumberOfGuests(value, 'minus')) {
-                    //_this.view.updateGustsView();
-                    //_this.view.updateCurrentViewDishTable();
-                }
+                _this.model.setNumberOfGuests(value, 'minus');
             });
         };
-
         var unbind = function () {
             _this.view.plusButton.off('click');
             _this.view.minusButton.off('click');

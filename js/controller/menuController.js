@@ -13,11 +13,6 @@ var MenuController = function (view, model) {
     _this.view = view;
 
     _this.load = function () {
-        var subLoad = function () {
-            _this.view.updateMenu();
-            _this.view.updateMainContentHeight();
-        };
-
         if( _this.view.container.width() == 0) {
             _this.view.container.stop().animate({
                 width: "100%",
@@ -25,12 +20,10 @@ var MenuController = function (view, model) {
                 opacity: "1"
             }, 500, function() {
                 $(this).show();
-                subLoad.call(this);
             });
 
         } else {
             _this.view.container.fadeIn(500, function () {
-                subLoad.call(this);
             });
         }
     }
@@ -41,7 +34,6 @@ var MenuController = function (view, model) {
 
     _this.view.menu_print_btn.on("click", function (e) {
         e.preventDefault();
-        _this.view.buildPrintMenu();
     })
 
     _this.view.print_menu_table.on("click", function () {
