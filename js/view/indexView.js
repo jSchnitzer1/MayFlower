@@ -20,6 +20,4 @@ var IndexView = function (container, model) {
         _this.subheading.addClass('sanimate');
         _this.reserve.addClass('ranimate');
     }
-
-
 }

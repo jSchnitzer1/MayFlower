@@ -18,6 +18,7 @@ var DinnerController = function (view, model) {
             _this.controlNavMenuEvents();
             _this.controllPlusMinusEvents();
             _this.view.updateMainContentHeight();
+            _this.view.getDishes();
         };
 
         if(_this.view.container.width() == 0) {
@@ -118,27 +119,16 @@ var DinnerController = function (view, model) {
     });
 
     _this.view.select_dish.change(function () {
-        _this.view.selected_dish_option.each(function () {
-            switch($(this).val()){
-                case "0":
-                    _this.view.search_txt.autocomplete('option', 'source', _this.model.getDishesNames());
-                    break;
-                case "starter":
-                    _this.view.search_txt.autocomplete('option', 'source', _this.model.getDishesNames('starter'));
-                    break;
-                case "main dish":
-                    _this.view.search_txt.autocomplete('option', 'source', _this.model.getDishesNames('main dish'));
-                    break;
-                case "dessert":
-                    _this.view.search_txt.autocomplete('option', 'source', _this.model.getDishesNames('dessert'));
-                    break;
-            }
-        });
+        var val = _this.view.select_dish.val();
+        _this.view.search_txt.autocomplete('option', 'source', _this.model.loadAcDishes(val));
     });
 
     _this.view.btn_search.on("click", function (e) {
         e.preventDefault();
-        _this.view.getDishes();
+        var filter = _this.view.search_txt.val();
+        var type = _this.view.select_dish.find(":selected").val();
+        _this.view.blockUI();
+        _this.model.getAllDishes(type, filter);
     });
 
     _this.build_dish_details = function (id) {
@@ -179,7 +169,7 @@ var DinnerController = function (view, model) {
         else {
             alert("Your menu is empty!")
         }
-    })
+    });
 
     _this.init = function () {
         _this.load();

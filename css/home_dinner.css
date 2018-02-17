@@ -387,6 +387,7 @@ input.search_dish:focus {
     position: relative;
     width: 100%;
     cursor: pointer;
+    border-bottom: dashed 1px rgba(255,255,255,0.5);
 }
 
 .dishes_content {
@@ -417,7 +418,7 @@ div.dish_view img {
 }
 
 div.desc {
-    padding: 5px;
+    padding: 1px 5px 1px 5px;
     font-size: 12px;
     text-align: center;
 }
@@ -530,7 +531,7 @@ div.desc {
         border-radius: 25px;
         opacity: 0.4;
         transition: all 1s;
-        height: 205px;
+        height: 215px;
         cursor: pointer;
     }
 
@@ -562,7 +563,7 @@ div.desc {
     .responsive {
         width: 152px;
         margin: 10px;
-        height: 205px;
+        height: 215px;
     }
 
     .dish_details .d_content_left {

@@ -1,8 +1,7 @@
 /*
  * Coded by:
  * - Khaled Jendi
- * - Camilla Björn
- * - Last update in 2018-01-27
+ * - Last update in 2018-02-17
  */
 
 var DinnerView = function (container, model) {
@@ -35,6 +34,7 @@ var DinnerView = function (container, model) {
     _this.menu_table = container.find(".menu_table");
     _this.confirm_dinner = container.find(".confirm");
     _this.selected_dish_option = container.find(".select_dish option:selected");
+    var container_right = container.find(".container_right");
 
     var main_banner = container.find(".main_banner");
     var footer = container.parents().find(".footer");
@@ -45,39 +45,39 @@ var DinnerView = function (container, model) {
     var total_cost = container.find(".total_cost span");
     var total = container.find(".total");
 
-    _this.updateMainContentHeight = function () {
-        var total_height = 0;
-        var window_width = $(window).width();
-        var window_height = $(window).height();
-
-        var main_banner_height = main_banner.outerHeight();
-        var footer_height = footer.outerHeight();
-        var top_banner_height = top_banner.outerHeight();
-        var container_left_height = container_left.outerHeight()
-
-        if (dishes_content.is(":visible")) {
-            if (window_width > 990) { // desktop
-                total_height = main_banner_height + footer_height + top_banner_height;
-            } else {
-                total_height = main_banner_height + footer_height + top_banner_height + container_left_height;
-            }
-
-            total_height += 35; // lets consider 15 as margin bottom !
-            dishes_content.height(window_height - total_height);
-        }
-        else {
-            if (window_width > 990) { //desktop
-                total_height = main_banner.outerHeight() + footer_height;
-            } else {
-                total_height = main_banner.outerHeight() + footer_height + container_left_height;
-            }
-
-            total_height += 35; // lets consider 35 as margin bottom !
-            dish_details.height(window_height - total_height);
-        }
-    };
-
     _this.update = function (obj) {
+        _this.updateMainContentHeight = function () {
+            var total_height = 0;
+            var window_width = $(window).width();
+            var window_height = $(window).height();
+
+            var main_banner_height = main_banner.outerHeight();
+            var footer_height = footer.outerHeight();
+            var top_banner_height = top_banner.outerHeight();
+            var container_left_height = container_left.outerHeight()
+
+            if (dishes_content.is(":visible")) {
+                if (window_width > 990) { // desktop
+                    total_height = main_banner_height + footer_height + top_banner_height;
+                } else {
+                    total_height = main_banner_height + footer_height + top_banner_height + container_left_height;
+                }
+
+                total_height += 35; // lets consider 15 as margin bottom !
+                dishes_content.height(window_height - total_height);
+            }
+            else {
+                if (window_width > 990) { //desktop
+                    total_height = main_banner.outerHeight() + footer_height;
+                } else {
+                    total_height = main_banner.outerHeight() + footer_height + container_left_height;
+                }
+
+                total_height += 35; // lets consider 35 as margin bottom !
+                dish_details.height(window_height - total_height);
+            }
+        };
+
         var updateGustsView = function () {
             _this.numberOfGuests.val(_this.model.getNumberOfGuests());
         }
@@ -86,7 +86,7 @@ var DinnerView = function (container, model) {
             if (dish_details.is(":visible")) {
 
                 var id = _this.model.getCurrentViewDish();
-                if(!id) return;
+                if (!id) return;
 
                 var dish = _this.model.getDish(id);
                 var totalGuests = _this.model.getNumberOfGuests();
@@ -109,16 +109,16 @@ var DinnerView = function (container, model) {
         }
 
         var updateDishesView = function (dishes) {
-
             if (dishes) {
                 var dish_html = "";
                 _.each(dishes, function (val, i) {
+                    var title = val.title.length > 40 ? val.title.substring(0, 45) + "..." : val.title;
                     dish_html += '<div class="responsive">' +
                         '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
                         '<a class="dish_view_select">' +
-                        '<img src="images/' + val.image + '" alt="' + val.name + '">' +
+                        '<img src="https://spoonacular.com/recipeImages/' + val.image + '" alt="' + val.title + '">' +
                         '</a>' +
-                        '<div class="desc">' + val.name + '</div>' +
+                        '<div class="desc">' + title + '</div>' +
                         '</div>' +
                         '</div>';
                 });
@@ -156,7 +156,7 @@ var DinnerView = function (container, model) {
 
             top_banner.fadeOut(400);
             dishes_content.fadeOut(400);
-            dish_details.fadeIn(1000, function() {
+            dish_details.fadeIn(1000, function () {
                 _this.updateMainContentHeight();
             });
         }
@@ -167,7 +167,7 @@ var DinnerView = function (container, model) {
         }
         var updateDishPanel = function () {
             var id = _this.model.getCurrentViewDish();
-            if(id) {
+            if (id) {
                 updateSelectDishDetails(id);
             }
             else {
@@ -192,20 +192,68 @@ var DinnerView = function (container, model) {
                 total.html(_this.model.getTotalMenuPrice());
 
                 //for mobile usage:
-                if(obj && obj.menu_mode == "open_menu") {
-                    if($(window).width() < 970 && !_this.nav_menu_wrap.hasClass("active")) {
+                if (obj && obj.menu_mode == "open_menu") {
+                    if ($(window).width() < 970 && !_this.nav_menu_wrap.hasClass("active")) {
                         _this.nav_menu_wrap.toggleClass('active');
                     }
                 }
             }
         }
+        _this.blockUI = function (component, message) {
+            container_right.block({
+                message: "<div style=' font-size: 21px'><img src='images/loading.svg' > Loading...</div>",
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: 'rgba(111, 111, 111, 0.3)',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    'border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+        };
 
         _this.getDishes = function (filter) {
-            if(!filter)
-                filter = _this.search_txt.val();
-            var type = _this.select_dish.find(":selected").val();
-            var dishes = _this.model.getAllDishes(type, filter);
-            updateDishesView(dishes);
+            if (obj && obj.dishes_callback) {
+                switch (obj.dishes_callback) {
+                    case "init":
+                        break;
+                    case "ok":
+                        var dishes = _this.model.getApiDishs();
+                        updateDishesView(dishes);
+                        container_right.unblock();
+                        break;
+                    default:
+                        break;
+                }
+                obj = undefined;
+            }
+            else {
+                if (obj && obj.acDishes_callback) return;
+                var dishes = _this.model.getApiDishs();
+                if (!dishes || dishes.length === 0) {
+                    if (!filter)
+                        filter = _this.search_txt.val();
+                    var type = _this.select_dish.find(":selected").val();
+                    _this.blockUI();
+                    _this.model.getAllDishes(type, filter);
+                }
+                else {
+                    updateDishesView(dishes);
+                }
+            }
+        };
+
+        _this.loadAcDishes = function () {
+            if (obj && obj.acDishes_callback) {
+                if(obj.acDishes_callback === "ok") {
+                    obj = undefined;
+                }
+                return;
+            }
+            _this.model.loadAcDishes("");
         };
 
 
@@ -216,16 +264,17 @@ var DinnerView = function (container, model) {
         updateMenu();
 
         _this.getDishes();
+        _this.loadAcDishes();
+
         _this.search_txt.autocomplete({
-            source: _this.model.getDishesNames(),
+            source: _this.model.getApiAcDishes(),
             select: function (e, ui) {
-                _this.getDishes(ui.item.value);
+
             }
         });
-
     }
 
-    _this.update();
+    _this.update({dishes_callback: "init"});
 
 }
  
