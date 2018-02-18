@@ -36,8 +36,25 @@ var DinnerModel = function () {
     }
 
     this.setCurrentViewDish = function (id) {
-        currentViewDish = id;
-        this.notifyObservers();
+        if (id) {
+            $.ajax({
+                url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + id + "/information?includeNutrition=false",
+                headers: {
+                    'X-Mashape-Key': key
+                },
+                success: function (data) {
+                    currentViewDish = data;
+                    _this.notifyObservers();
+                },
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.message);
+                }
+            });
+        } else {
+            currentViewDish = undefined;
+            this.notifyObservers();
+        }
     }
 
     this.getCurrentViewDish = function () {
@@ -121,19 +138,17 @@ var DinnerModel = function () {
 
     //Adds the passed dish to the menu. If the dish of that type already exists on the menu
     //it is removed from the menu and the new one added.
-    this.addDishToMenu = function (id) {
-        var dish = this.getDish(id);
-        var price = 0;
-
-        _.each(dish.ingredients, function (val, i) {
-            price += (val.price * totalGuests);
-        });
-
+    this.addDishToMenu = function (dish) {
         menu.push({
-            "id": id,
-            "name": dish.name,
-            "price": price,
-            "numPeople": totalGuests
+            "id": dish.id,
+            "title": dish.title,
+            "people": dish.people,
+            "price": dish.total,
+            "image": dish.image,
+            "type": dish.type,
+            "score": dish.score,
+            "cookingtime": dish.cookingtime,
+            "instructions": dish.instructions
         });
         this.notifyObservers({menu_mode: "open_menu"});
     }
@@ -146,8 +161,6 @@ var DinnerModel = function () {
         this.notifyObservers();
     }
 
-
-    //modify
     this.getAllDishes = function (type, filter, callback, errorCallback) {
         $.ajax({
             url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?type=" + type,
@@ -162,11 +175,10 @@ var DinnerModel = function () {
                             apiDishes.push(val);
                         }
                     });
-                    _this.notifyObservers({dishes_callback: "ok"});
                 } else {
                     apiDishes = data.results;
-                    _this.notifyObservers({dishes_callback: "ok"});
                 }
+                _this.notifyObservers({dishes_callback: "ok"});
             },
             error: function (xhr, status, error) {
                 var err = eval("(" + xhr.responseText + ")");
@@ -197,55 +209,4 @@ var DinnerModel = function () {
             }
         });
     };
-
-
-
-
-
-    //modify
-    this.getDish = function (id) {
-        return;
-        for (key in dishes) {
-            if (dishes[key].id == id) {
-                return dishes[key];
-            }
-        }
-    }
-
-    //modify
-    this.getDishesNames = function (type) {
-        //apiAcDishes
-        return;
-        var result = [];
-        if (!type || 0 === type.length) {
-            _.each(dishes, function (val, i) {
-                if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
-                    result.push(val.name);
-                }
-                _.each(val.ingredients, function (val, i) {
-                    if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
-                        result.push(val.name);
-                    }
-                });
-            });
-            return result;
-        }
-        else {
-            _.each(dishes, function (val, i) {
-                if (val.type == type) {
-                    if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
-                        result.push(val.name);
-                    }
-                    _.each(val.ingredients, function (val, i) {
-                        if (result.indexOf(val.name) == -1) { // not in the array (prevent duplicates!!)
-                            result.push(val.name);
-                        }
-                    });
-                }
-            });
-            return result;
-        }
-    }
-
-
 }

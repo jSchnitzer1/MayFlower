@@ -21,12 +21,12 @@ var DinnerController = function (view, model) {
             _this.view.getDishes();
         };
 
-        if(_this.view.container.width() == 0) {
+        if (_this.view.container.width() == 0) {
             _this.view.container.stop().animate({
                 width: "100%",
                 height: "100%",
                 opacity: "1"
-            }, 500, function() {
+            }, 500, function () {
                 $(this).show();
                 subLoad.call(this);
             });
@@ -38,9 +38,9 @@ var DinnerController = function (view, model) {
         }
     }
 
-    
+
     _this.controlNavMenuEvents = function () {
-        var nav_menu_events = $._data(_this.view.nav_menu_toggle[0], "events" );
+        var nav_menu_events = $._data(_this.view.nav_menu_toggle[0], "events");
 
         var bind = function () {
             _this.view.nav_menu_toggle.add(_this.view.nav_menu_close).on('click', function () {
@@ -53,12 +53,12 @@ var DinnerController = function (view, model) {
             _this.view.nav_menu_close.off('click');
         };
 
-        if(nav_menu_events) {
+        if (nav_menu_events) {
             var click_events_count = nav_menu_events.click.length;
-            if(click_events_count == 0) {
+            if (click_events_count == 0) {
                 bind();
             }
-            else if(nav_menu_events > 1) {
+            else if (nav_menu_events > 1) {
                 unbind(); // remove all current events
                 bind(); // engage only one event
             }
@@ -68,8 +68,8 @@ var DinnerController = function (view, model) {
         }
     }
 
-    _this.controllPlusMinusEvents = function() {
-        var plus_button_events = $._data(_this.view.plusButton[0], "events" );
+    _this.controllPlusMinusEvents = function () {
+        var plus_button_events = $._data(_this.view.plusButton[0], "events");
 
         var bind = function () {
             _this.view.plusButton.on('click', function () {
@@ -86,12 +86,12 @@ var DinnerController = function (view, model) {
             _this.view.minusButton.off('click');
         };
 
-        if(plus_button_events) {
+        if (plus_button_events) {
             var click_events_count = plus_button_events.click.length;
-            if(click_events_count == 0) {
+            if (click_events_count == 0) {
                 bind();
             }
-            else if(plus_button_events > 1) {
+            else if (plus_button_events > 1) {
                 unbind();
                 bind();
             }
@@ -101,14 +101,15 @@ var DinnerController = function (view, model) {
         }
     }
 
-    $(window).resize(function() {
-        if($(window).width() > 990) {
+    $(window).resize(function () {
+        if ($(window).width() > 990) {
             if (_this.view.nav_menu_wrap.hasClass("active")) {
                 _this.view.nav_menu_wrap.toggleClass('active');
             }
         }
         _this.view.updateMainContentHeight();
-    });
+
+    }).resize();
 
     _this.view.select_dish.focus(function () {
         _this.view.select_dish_label.toggleClass('changed');
@@ -140,22 +141,25 @@ var DinnerController = function (view, model) {
         e.preventDefault();
         _this.model.setCurrentViewDish(undefined);
     });
-    
+
     _this.view.add_menu.on("click", function (e) {
         e.preventDefault();
-        var id = $(this).attr("href");
+        var dish = $(this).data("selected_dish");
+
+        if (!dish) return;
+
         var inMenu = false;
         _.each(_this.model.getMenu(), function (val, i) {
-            if(val.id == id){
+            if (val.id == dish.id) {
                 inMenu = true;
                 return false;
             }
         });
-        if(!inMenu) {
-            _this.model.addDishToMenu(id);
+        if (!inMenu) {
+            _this.model.addDishToMenu(dish);
         }
     })
-    
+
     _this.removeDishFromMenu = function (id) {
         _this.model.removeDishFromMenu(id);
     }
@@ -163,7 +167,7 @@ var DinnerController = function (view, model) {
     _this.view.confirm_dinner.on("click", function (e) {
         e.preventDefault();
         var menu = _this.model.getMenu();
-        if(menu && menu.length > 0) {
+        if (menu && menu.length > 0) {
             window.location.hash = "#menu";
         }
         else {

@@ -39,13 +39,12 @@ var MenuView = function (container, model) {
             _this.menu_total_price.html(totalPrice + ":- SEK");
 
             _.each(menu, function (val, i) {
-                var dish = _this.model.getDish(val.id);
                 menu_html += '<div class="responsive">' +
                     '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
                     '<a class="dish_view_select">' +
-                    '<img src="images/' + dish.image + '" alt="' + dish.name + '">' +
+                    '<img src="' + val.image + '" alt="' + val.title + '">' +
                     '</a>' +
-                    '<div class="desc">' + dish.name + '</div>' +
+                    '<div class="desc">' + val.title + '</div>' +
                     '</div>' +
                     '</div>';
             });
@@ -74,35 +73,31 @@ var MenuView = function (container, model) {
             _this.menu_modal_table.children('tbody').children('tr').remove();
             _.each(menu, function (val, i) {
                 var tr_html = "";
-                var dish = _this.model.getDish(val.id);
                 if (i === (menu.length - 1)) {
                     tr_html += '<tr style="border: none">';
                 }
                 else {
                     tr_html += '<tr>';
                 }
-                tr_html += '<td class="modal_img"><img src="images/' + dish.image + '"></td>' +
+                tr_html += '<td class="modal_img"><img src="' + val.image + '"></td>' +
                     '<td class="modal_desc">' +
-                    '<div class="modal_dish_label">' + dish.name + '</div>' +
-                    '<div class="modal_dish_type">' + dish.type + '</div>' +
+                    '<div class="modal_dish_label">' + val.title + '</div>' +
+                    '<div class="modal_dish_type">' + val.type + '</div>' +
                     '<div class="modal_dish_detail">' +
-                    '<div class="modal_rank">rank: ';
+                    '<div class="modal_sales">Cooking Time: ' + val.cookingtime + ' minutes</div>' +
+                    '<div class="modal_rank">Score: ';
 
-                var rank = Math.round(dish.rank);
-
-                for (var i = 0; i < rank; i++) {
+                for (var i = 0; i < val.score; i++) {
                     tr_html += '<span class="fa fa-star"></span>';
                 }
 
                 tr_html += '</div>' +
-                    '<div class="modal_sales">Sales: ' + dish.sales + '</div>' +
                     '</div>' +
                     '</td>' +
-                    '<td class="modal_preperation">' + dish.description + '</td>' +
+                    '<td class="modal_preperation">' + val.instructions + '</td>' +
                     '</tr>';
 
                 _this.menu_modal_table.append(tr_html);
-
             });
         }
 

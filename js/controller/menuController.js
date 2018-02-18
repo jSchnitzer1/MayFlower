@@ -13,7 +13,7 @@ var MenuController = function (view, model) {
     _this.view = view;
 
     _this.load = function () {
-        if( _this.view.container.width() == 0) {
+        if(_this.view.container.width() == 0) {
             _this.view.container.stop().animate({
                 width: "100%",
                 height: "100%",

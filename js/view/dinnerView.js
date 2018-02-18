@@ -85,24 +85,36 @@ var DinnerView = function (container, model) {
         var updateCurrentViewDishTable = function () {
             if (dish_details.is(":visible")) {
 
-                var id = _this.model.getCurrentViewDish();
-                if (!id) return;
+                var dish = _this.model.getCurrentViewDish();
+                if (!dish) return;
 
-                var dish = _this.model.getDish(id);
                 var totalGuests = _this.model.getNumberOfGuests();
-                var price = 0;
 
-                _this.d_label_table.html(dish.name + " for: " + "<span>" + totalGuests + " people</span>");
+                _this.d_label_table.html(dish.title + " for: " + "<span>" + totalGuests + " people</span>");
                 _this.ing_table.children('tbody').children('tr').remove();
-                _.each(dish.ingredients, function (val, i) {
-                    price += (val.price * totalGuests);
+                _.each(dish.extendedIngredients, function (val, i) {
                     var ing_html = '<tr>' +
                         '<th scope="row">' + val.name + '</th>' +
-                        '<td>' + (parseInt(val.quantity) * totalGuests) + '</td>' +
+                        '<td>' + (parseInt(val.amount) * totalGuests) + '</td>' +
                         '<td>' + val.unit + '</td>' +
-                        '<td>SEK ' + (val.price * totalGuests) + '</td>' +
                         '</tr>';
                     _this.ing_table.append(ing_html);
+                });
+
+                var price = Math.round(dish.pricePerServing * totalGuests);
+                var type = (dish.dishTypes && dish.dishTypes.length > 0) ? dish.dishTypes[0] : "";
+                var score = Math.round(dish.spoonacularScore / 25);
+                var instructions = (dish.instructions && dish.instructions.length > 0) ? dish.instructions : "";
+                _this.add_menu.data("selected_dish", {
+                    "id": dish.id,
+                    "title": dish.title,
+                    "people": totalGuests,
+                    "total": price,
+                    "image": dish.image,
+                    "type": type,
+                    "score": score,
+                    "cookingtime": dish.cookingMinutes,
+                    "instructions": instructions
                 });
                 _this.d_price.html(price);
             }
@@ -112,7 +124,7 @@ var DinnerView = function (container, model) {
             if (dishes) {
                 var dish_html = "";
                 _.each(dishes, function (val, i) {
-                    var title = val.title.length > 40 ? val.title.substring(0, 45) + "..." : val.title;
+                    var title = val.title.length > 45 ? val.title.substring(0, 44) + "..." : val.title;
                     dish_html += '<div class="responsive">' +
                         '<div class="dish_view" onclick="controller.build_dish_details(' + val.id + ')">' +
                         '<a class="dish_view_select">' +
@@ -126,32 +138,46 @@ var DinnerView = function (container, model) {
             }
         }
 
-        var updateSelectDishDetails = function (id) {
+        var updateSelectDishDetails = function (dish) {
 
-            var dish = _this.model.getDish(id);
             var totalGuests = _this.model.getNumberOfGuests();
             var price = 0;
+            //var title = dish.title.length > 35 ? dish.title.substring(0, 34) + "..." : val.title;
 
-            _this.d_label.html(dish.name);
+            _this.d_label.html(dish.title);
 
-            _this.d_img.attr("src", "images/" + dish.image);
-            _this.d_desc.html(dish.description);
-            _this.d_back.attr("href", id);
+            _this.d_img.attr("src", dish.image);
+            _this.d_desc.html(dish.instructions);
+            _this.d_back.attr("href", dish.id);
 
-            _this.d_label_table.html(dish.name + " for: " + "<span>" + totalGuests + " people</span>");
+            _this.d_label_table.html(dish.title + " for: " + "<span>" + totalGuests + " people</span>");
             _this.ing_table.children('tbody').children('tr').remove();
-            _.each(dish.ingredients, function (val, i) {
-                price += (val.price * totalGuests);
+            _.each(dish.extendedIngredients, function (val, i) {
                 var ing_html = '<tr>' +
                     '<th scope="row">' + val.name + '</th>' +
-                    '<td>' + (parseInt(val.quantity) * totalGuests) + '</td>' +
+                    '<td>' + (parseInt(val.amount) * totalGuests) + '</td>' +
                     '<td>' + val.unit + '</td>' +
-                    '<td>SEK ' + (val.price * totalGuests) + '</td>' +
                     '</tr>';
                 _this.ing_table.append(ing_html);
             });
 
-            _this.add_menu.attr("href", id);
+            var price = Math.round(dish.pricePerServing * totalGuests);
+            var type = (dish.dishTypes && dish.dishTypes.length > 0) ? dish.dishTypes[0] : "";
+            var score = Math.round(dish.spoonacularScore / 25);
+            var instructions = (dish.instructions && dish.instructions.length > 0) ? dish.instructions : "";
+            _this.add_menu.data("selected_dish", {
+                "id": dish.id,
+                "title": dish.title,
+                "people": totalGuests,
+                "total": price,
+                "image": dish.image,
+                "type": type,
+                "score": score,
+                "cookingtime": dish.cookingMinutes,
+                "instructions": instructions
+            });
+            _this.d_price.html(price);
+
             _this.d_price.html(price);
 
             top_banner.fadeOut(400);
@@ -166,9 +192,9 @@ var DinnerView = function (container, model) {
             dishes_content.fadeIn(1000);
         }
         var updateDishPanel = function () {
-            var id = _this.model.getCurrentViewDish();
-            if (id) {
-                updateSelectDishDetails(id);
+            var currentViewDish = _this.model.getCurrentViewDish();
+            if (currentViewDish) {
+                updateSelectDishDetails(currentViewDish);
             }
             else {
                 backToDishesView();
@@ -177,19 +203,44 @@ var DinnerView = function (container, model) {
 
         var updateMenu = function (mode) {
             var menu = _this.model.getMenu();
-            if (menu) {
-                _this.menu_table.children('tbody').children('tr').remove();
+            if (menu ) {
+                 _this.menu_table.children('tbody').children('tr').remove();
                 _.each(menu, function (val, i) {
                     var menu_html = '<tr>' +
-                        '<th scope="row" class="remove_dish" onclick="controller.removeDishFromMenu(' + val.id + ')">X</th>' +
-                        '<td>' + val.name + '</td>' +
+                        '<td scope="row" class="remove_dish" onclick="controller.removeDishFromMenu(' + val.id + ')">X</td>' +
+                        '<td>' + val.title + '</td>' +
                         '<td>' + val.price + '</td>' +
-                        '<td>' + val.numPeople + '</td>' +
+                        '<td>' + val.people + '</td>' +
                         '</tr>';
                     _this.menu_table.append(menu_html);
                 });
-                total_cost.html(_this.model.getTotalMenuPrice());
-                total.html(_this.model.getTotalMenuPrice());
+
+
+                var menu_table_cells = _this.menu_table.find('tbody tr:first').children();
+
+                var colWidth = menu_table_cells.map(function () {
+                    var w = $(this).width();
+                    return w;
+                }).get();
+
+                _this.menu_table.find('thead tr').children().each(function (i, v) {
+                    $(v).width(colWidth[i]);
+                });
+
+                /*
+
+                var container_right_height = container_right.height();
+
+                if(_this.menu_table.find('tbody').height() > (container_right_height - 100)/2)
+                    _this.menu_table.find('tbody').height(((container_right_height - 100)/2));
+
+                */
+
+
+                var total_price = _this.model.getTotalMenuPrice();
+
+                total_cost.html(total_price);
+                total.html(total_price);
 
                 //for mobile usage:
                 if (obj && obj.menu_mode == "open_menu") {
@@ -216,6 +267,7 @@ var DinnerView = function (container, model) {
         };
 
         _this.getDishes = function (filter) {
+            if (_this.model.getCurrentViewDish()) return;
             if (obj && obj.dishes_callback) {
                 switch (obj.dishes_callback) {
                     case "init":
@@ -247,15 +299,15 @@ var DinnerView = function (container, model) {
         };
 
         _this.loadAcDishes = function () {
+            if (_this.model.getCurrentViewDish()) return;
             if (obj && obj.acDishes_callback) {
-                if(obj.acDishes_callback === "ok") {
+                if (obj.acDishes_callback === "ok") {
                     obj = undefined;
                 }
                 return;
             }
             _this.model.loadAcDishes("");
         };
-
 
 
         updateGustsView();
