@@ -15,7 +15,7 @@ var MenuView = function (container, model) {
 
     _this.menu_back = container.find("#menu_back");
 
-    _this.menu_total_guest = container.find("#menu_total_guest");
+    //_this.menu_total_guest = container.find("#menu_total_guest");
     _this.menu_total_price = container.find("#menu_total_price");
     _this.menu_dishes = container.find(".menu_dishes");
     _this.menu_print_btn = container.find("#menu_print_btn");
@@ -35,7 +35,7 @@ var MenuView = function (container, model) {
             var totalPrice = _this.model.getTotalMenuPrice();
             var menu_html = "";
 
-            _this.menu_total_guest.html(totalGuests + " People");
+            //_this.menu_total_guest.html(totalGuests + " People");
             _this.menu_total_price.html(totalPrice + ":- SEK");
 
             _.each(menu, function (val, i) {

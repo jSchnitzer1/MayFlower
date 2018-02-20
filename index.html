@@ -9,9 +9,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.css" />
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/home_dinner.css">
     <link rel="stylesheet" href="css/menu.css">
+
 </head>
 <body>
 <div id="general_view" class=".container-fluid overlay">
@@ -39,7 +42,7 @@
                 </div>
             </section>
             <section class="row" style="width: 100%">
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="padding-right: 0px">
                     <div class="container_left">
                         <nav class="nav-menu-wrap">
                             <ul class="nav-menu">
@@ -127,7 +130,7 @@
                         </article>
                     </div>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="padding-right: 0px">
                     <div class="container_right">
                         <div class="top_banner">
                             <div class="find_dish_lable">Find a dish:</div>
@@ -149,11 +152,24 @@
                                 <div class="search_banner_div search_button">
                                     <a id="btn_search" href="" class="btn-outline-white btn-lg">Search</a>
                                 </div>
+
+                                <div class="show_type">
+                                    <div style="float: right">
+                                        <label class="switch">
+                                            <input id="dish_view_type" type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div id="dish_view_txt" style="float: right; margin-right: 5px;">Tabular View</div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="main_container_right">
-                            <div class="dishes_content">
+                            <div id="dishes_content_block_overlay">
+                                <div class="dishes_content">
 
+                                </div>
                             </div>
                             <div class="dish_details" style="display: none;">
                                 <div class="d_content_left">
@@ -184,6 +200,8 @@
 
                                 </div>
                             </div>
+                            <div id="dishes_content_album" class="dishes_content_album">
+                            </div>
                         </div>
 
                     </div>
@@ -200,7 +218,7 @@
                 </div>
             </div>
             <div class="menu_top" style="width: 100%">
-                <div class="float-left menu_people">My Dinner: <span id="menu_total_guest">3 People</span></div>
+                <div class="float-left menu_people">Dinner Menu</div>
                 <div class="float-right menu_back_btn">
                     <a id="menu_back" href="#home_dinner" class="btn-outline-white btn-lg">&lt; &nbsp;Edit &nbsp;Dinner</a>
                 </div>
@@ -246,11 +264,14 @@
         </table>
     </section>
 </div>
+<div id="some_content" style="display: none;">
 
+</div>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <script src="js/libs/jquery.blockUI.min.js"></script>
+<script type="text/javascript" src="js/libs/carousel.js"></script>
 
 <!-- Underscore -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -258,12 +279,15 @@
 <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+<!-- jgrowl -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.js"></script>
+
 <!-- Responsive video player -->
 <script src="js/libs/jquery.vide.min.js"></script>
 
 <!-- The application JavaScript code -->
 <script type='text/javascript'>
-    var view, model, controller, screenLoader;
+    var view, model, controller, screenLoader, carousel;;
 </script>
 <script src="js/screenLoader.js"></script>
 <script src="js/app.js"></script>

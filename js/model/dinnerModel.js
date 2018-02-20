@@ -21,7 +21,7 @@ var DinnerModel = function () {
         observers.push(observer);
     }
 
-    this.notifyObservers = function (obj) {
+    var notifyObservers = function (obj) {
         _.each(observers, function (val, i) {
             val.update(obj);
         });
@@ -44,16 +44,16 @@ var DinnerModel = function () {
                 },
                 success: function (data) {
                     currentViewDish = data;
-                    _this.notifyObservers();
+                    notifyObservers({type: 'currentViewDishUpdated'});
                 },
                 error: function (xhr, status, error) {
                     var err = eval("(" + xhr.responseText + ")");
-                    alert(err.message);
+                    notifyObservers({type: 'jsonError', error: err.message});
                 }
             });
         } else {
             currentViewDish = undefined;
-            this.notifyObservers();
+            notifyObservers({type: 'currentViewDishUpdated'});
         }
     }
 
@@ -76,7 +76,7 @@ var DinnerModel = function () {
                     num = 10;
                 }
                 totalGuests = num;
-                this.notifyObservers();
+                notifyObservers({type: 'numberOfGuestsUpdated'});
                 return true;
             }
             else {
@@ -88,7 +88,7 @@ var DinnerModel = function () {
                     num = 1;
                 }
                 totalGuests = num;
-                this.notifyObservers();
+                notifyObservers({type: 'numberOfGuestsUpdated'});
                 return true;
             }
             return false;
@@ -150,7 +150,7 @@ var DinnerModel = function () {
             "cookingtime": dish.cookingtime,
             "instructions": dish.instructions
         });
-        this.notifyObservers({menu_mode: "open_menu"});
+        notifyObservers({type: 'menuUpdated', menuMode: "open_menu"});
     }
 
     //Removes dish from menu
@@ -158,7 +158,7 @@ var DinnerModel = function () {
         menu = jQuery.grep(menu, function (e) {
             return (e.id != id);
         });
-        this.notifyObservers();
+        notifyObservers({type: 'menuUpdated', menuMode: "open_menu"});
     }
 
     this.getAllDishes = function (type, filter, callback, errorCallback) {
@@ -178,11 +178,11 @@ var DinnerModel = function () {
                 } else {
                     apiDishes = data.results;
                 }
-                _this.notifyObservers({dishes_callback: "ok"});
+                notifyObservers({type: 'apiDishesUpdated', dishes_callback: "ok"});
             },
             error: function (xhr, status, error) {
                 var err = eval("(" + xhr.responseText + ")");
-                alert(err.message);
+                notifyObservers({type: 'jsonError', error: err.message});
             }
         });
     }
@@ -201,11 +201,11 @@ var DinnerModel = function () {
                         {"key": val.id, "value": val.title}
                     );
                 });
-                _this.notifyObservers({acDishes_callback: "ok"});
+                notifyObservers({type: 'apiAcDishesUpdated', acDishes_callback: "ok"});
             },
             error: function (xhr, status, error) {
                 var err = eval("(" + xhr.responseText + ")");
-                alert(err.message);
+                notifyObservers({type: 'jsonError', error: err.message});
             }
         });
     };

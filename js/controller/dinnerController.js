@@ -1,8 +1,7 @@
 /*
  * Coded by:
  * - Khaled Jendi
- * - Camilla Björn
- * - Last update in 2018-01-27
+ * - Last update in 2018-02-19
  */
 
 
@@ -17,8 +16,15 @@ var DinnerController = function (view, model) {
         var subLoad = function () {
             _this.controlNavMenuEvents();
             _this.controllPlusMinusEvents();
+            _this.controllConfirmEvents();
+            _this.view.dish_view_type.attr('checked', false);
+            _this.controllDishViewTypeEvents();
+
             _this.view.updateMainContentHeight();
             _this.view.getDishes();
+
+
+
         };
 
         if (_this.view.container.width() == 0) {
@@ -38,6 +44,78 @@ var DinnerController = function (view, model) {
         }
     }
 
+    _this.controllDishViewTypeEvents = function () {
+        var dish_view_type_events = $._data(_this.view.dish_view_type[0], "events");
+
+        var bind = function () {
+            _this.view.dish_view_type.on('click', function () {
+                if(this.checked){
+                    //carousel
+                    _this.view.dishes_content.css('display', 'none');
+                    _this.view.dishes_content_album.fadeTo(250, 0.9);
+                    _this.view.dish_view_txt.html('Album View');
+                }
+                else {
+                    //tabular
+                    _this.view.dishes_content_album.css('opacity', '0');
+                    _this.view.dishes_content.fadeTo(250, 0.9);
+                    _this.view.dish_view_txt.html('Tabular View');
+                }
+                _this.view.updateMainContentHeight();
+            });
+        };
+        var unbind = function () {
+            _this.view.dish_view_type.off('click');
+        };
+
+        if (dish_view_type_events) {
+            var click_events_count = dish_view_type_events.click.length;
+            if (click_events_count == 0) {
+                bind();
+            }
+            else if (click_events_count > 1) {
+                unbind();
+                bind();
+            }
+        }
+        else {
+            bind();
+        }
+    }
+
+    _this.controllConfirmEvents = function () {
+        var confirm_btn_events = $._data(_this.view.confirm_dinner[0], "events");
+
+        var bind = function () {
+            _this.view.confirm_dinner.on("click", function (e) {
+                e.preventDefault();
+                var menu = _this.model.getMenu();
+                if (menu && menu.length > 0) {
+                    window.location.hash = "#menu";
+                }
+                else {
+                    _this.view.glowMessage("<span style='font-size: 15px'>Menu Notification</span>", "Please add dishes before confirming!", "error");
+                }
+            });
+        };
+        var unbind = function () {
+            _this.view.confirm_dinner.off('click');
+        };
+
+        if (confirm_btn_events) {
+            var click_events_count = confirm_btn_events.click.length;
+            if (click_events_count == 0) {
+                bind();
+            }
+            else if (click_events_count > 1) {
+                unbind();
+                bind();
+            }
+        }
+        else {
+            bind();
+        }
+    }
 
     _this.controlNavMenuEvents = function () {
         var nav_menu_events = $._data(_this.view.nav_menu_toggle[0], "events");
@@ -58,7 +136,7 @@ var DinnerController = function (view, model) {
             if (click_events_count == 0) {
                 bind();
             }
-            else if (nav_menu_events > 1) {
+            else if (click_events_count > 1) {
                 unbind(); // remove all current events
                 bind(); // engage only one event
             }
@@ -91,7 +169,7 @@ var DinnerController = function (view, model) {
             if (click_events_count == 0) {
                 bind();
             }
-            else if (plus_button_events > 1) {
+            else if (click_events_count > 1) {
                 unbind();
                 bind();
             }
@@ -121,7 +199,7 @@ var DinnerController = function (view, model) {
 
     _this.view.select_dish.change(function () {
         var val = _this.view.select_dish.val();
-        _this.view.search_txt.autocomplete('option', 'source', _this.model.loadAcDishes(val));
+        _this.model.loadAcDishes(val);
     });
 
     _this.view.btn_search.on("click", function (e) {
@@ -133,6 +211,7 @@ var DinnerController = function (view, model) {
     });
 
     _this.build_dish_details = function (id) {
+        _this.view.blockUI();
         _this.model.setCurrentViewDish(id);
         return false; // same as preventDefaults()
     }
@@ -163,17 +242,6 @@ var DinnerController = function (view, model) {
     _this.removeDishFromMenu = function (id) {
         _this.model.removeDishFromMenu(id);
     }
-
-    _this.view.confirm_dinner.on("click", function (e) {
-        e.preventDefault();
-        var menu = _this.model.getMenu();
-        if (menu && menu.length > 0) {
-            window.location.hash = "#menu";
-        }
-        else {
-            alert("Your menu is empty!")
-        }
-    });
 
     _this.init = function () {
         _this.load();

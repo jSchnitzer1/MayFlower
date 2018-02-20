@@ -508,6 +508,108 @@ div.desc {
     font-weight: bolder;
 }
 
+.show_type {
+    display: inline-block;
+    height: 25px;
+    opacity: 0.7;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin: 0px;
+}
+
+
+.switch input {
+    display:none;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FF9F33;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.dishes_content_album {
+    opacity: 0;
+}
+
+.jGrowl .error {
+    background-color: rgba(255, 216, 216, 0.5);
+    font-family: "century_gothic", Verdana, Tahoma;
+}
+
+.jGrowl .info {
+    background-color: rgba(216, 216, 255, 0.5);
+    font-family: "century_gothic", Verdana, Tahoma;
+}
+
+a.thumblink:link    {color:#FFFFFF;}
+a.thumblink:visited {color:#FFFFFF;}
+a.thumblink:hover   {color:#009aff;}
+a.thumblink:active  {color:#FFFFFF;}
+
+.thumbDiv{
+    background-color:#FF0000;
+    width:100%;
+    height:100%;
+}
+
+.thumbP{
+    font-weight:100;
+    color:#FFFFFF !important;
+    font-size:13px !important;
+    line-height:18px !important;
+    width:223px;
+    padding-left:150px;
+    padding-top:184px;
+}
+
 /* for desktop screens*/
 @media (min-width:990px)  {
     .nav-menu-toggle{
@@ -547,7 +649,7 @@ div.desc {
     div.dish_view {
         border-radius: 25px;
         opacity: 0.4;
-        transition: all 1s;
+        transition: all 0.5s;
         height: 215px;
         cursor: pointer;
     }
@@ -557,8 +659,8 @@ div.desc {
         -webkit-transform: scale(1.3);
         -ms-transform: scale(1.3);
         transform: scale(1.3);
-        transition: all 1s;
-        z-index: 999;
+        transition: all 0.5s;
+        z-index: 1999;
 
         box-shadow: inset 0 0 0 5px #ffd27f;
         opacity: 0.7;
@@ -629,5 +731,9 @@ div.desc {
         text-align: justify;
         margin-bottom: 15px;
         font-size: 12px;
+    }
+
+    .show_type{
+        float: right;
     }
 }

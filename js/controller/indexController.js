@@ -2,7 +2,7 @@
  * Coded by:
  * - Khaled Jendi
  * - Camilla Björn
- * - Last update in 2018-01-26
+ * - Last update in 2018-02-19
  */
 
 
