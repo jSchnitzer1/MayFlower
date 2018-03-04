@@ -163,7 +163,7 @@ var DinnerModel = function () {
 
     this.getAllDishes = function (type, filter, callback, errorCallback) {
         $.ajax({
-            url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?type=" + type,
+            url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?type=" + type + "&query=" + filter,
             headers: {
                 'X-Mashape-Key': key
             },

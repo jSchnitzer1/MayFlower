@@ -196,9 +196,9 @@ var DinnerView = function (container, model) {
 
                 //main settings
                 backgroundColor: "",
-                backgroundImagePath: "../css/carousel/main_skin/background.jpg",
-                thumbnailsBackgroundImagePath: "../css/carousel/main_skin/thumbnailsBackground.jpg",
-                scrollbarBackgroundImagePath: "../css/carousel/main_skin/scrollbarBackground.jpg",
+                // backgroundImagePath: "css/carousel/main_skin/background.jpg",
+                // thumbnailsBackgroundImagePath: "css/carousel/main_skin/thumbnailsBackground.jpg",
+                // scrollbarBackgroundImagePath: "css/carousel/main_skin/scrollbarBackground.jpg",
                 backgroundRepeat: "repeat-x",
                 showDisplay2DAlways: "no",
                 carouselStartPosition: "center",
